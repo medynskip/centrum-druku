@@ -43,7 +43,7 @@ function Kontakt() {
           <div className="mapouter">
             <div className="gmap_canvas">
               <iframe
-                width={window.innerWidth}
+                width={process.browser ? window.innerWidth : null}
                 height="500"
                 id="gmap_canvas"
                 src="https://maps.google.com/maps?q=eiffel%20tower&t=&z=13&ie=UTF8&iwloc=&output=embed"
