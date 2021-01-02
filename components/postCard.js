@@ -11,7 +11,8 @@ const PostCard = (props) => {
   } / ${date.getFullYear()} g: ${date.getHours()}:${(
     "0" + date.getMinutes()
   ).slice(-2)}`;
-  const url = `/blog/${props.post.title}/${props.post._id}`;
+  // const url = `/blog/${props.post.title}`;
+  const url = `/blog/${props.post._id}`;
 
   return (
     <Col className="post-card">
