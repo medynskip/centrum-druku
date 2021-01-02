@@ -1,65 +1,124 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
+import LinkButton from "../components/linkButton";
+import ServiceCard from "../components/serviceCard";
+import CoopStep from "../components/coopStep";
+
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+
+import services from "../data/services";
+import steps from "../data/steps";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>Centrum Druku - Twoja drukarnia internetowa</title>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Navbar />
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+      <header>
+        <Container className="header">
+          <h1>
+            INTERNETOWA
+            <br /> AGENCJA
+            <br /> REKLAMOWA
+          </h1>
+          <div className="catchphrase">
+            <span>
+              Od <mark className="sea">pomysłu</mark>
+            </span>
+            <span>
+              przez <mark className="red">projekt</mark>
+            </span>
+            <span>
+              do <mark className="blue">realizacji</mark>
+            </span>
+          </div>
+          <div className="action-invite">
+            Poznaj nasze:
+            <div>
+              <LinkButton to="/uslugi/" text="usługi" varinat="primary" />
+              <LinkButton to="/druk" text="produkty" variant="success" />
+            </div>
+          </div>
+          <div className="social">
+            <a href="#">
+              <img src="/images/facebook_ico.png" alt="Facebook" />
+            </a>
+            <a href="#">
+              <img src="/images/instagram_ico.png" alt="Instagram" />
+            </a>
+            <a href="#">
+              <img src="/images/twitter_ico.png" alt="Twitter" />
+            </a>
+          </div>
+        </Container>
+      </header>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+      <section className="we-offer">
+        <Container>
+          <h3>Co możemy dla Ciebie zrobić?</h3>
+          <Row noGutters xs={1} md={2} lg={3}>
+            {services.map((service, index) => {
+              return <ServiceCard key={index} service={service} />;
+            })}
+          </Row>
+        </Container>
+      </section>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+      <section className="co-op">
+        <Container>
+          <h3>Jak wygląda współpraca?</h3>
+          <Row noGutters xs={1} md={1} lg={1}>
+            {steps.map((step, index) => {
+              return <CoopStep key={index} step={step} />;
+            })}
+          </Row>
+        </Container>
+      </section>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+      <section className="talk-to-us">
+        <Container>
+          <h3>Daj nam się zaskoczyć</h3>
+          <Row noGutters xs={1} md={2} lg={2}>
+            <Col lg={4} xs={{ order: 2 }} md={{ order: 1 }}>
+              <span>JESTEŚMY</span>
+              <br />
+              <span>GOTOWI NA KAŻDE</span>
+              <br />
+              <span>WYZWANIE</span>
+              <p>
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
+                diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+                aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
+                nostrud exerci tation ullamcorper suscipit lobortis nisl ut{" "}
+              </p>
+              <Button>portfolio</Button>
+            </Col>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+            <Col lg={8} xs={{ order: 1 }} md={{ order: 2 }}>
+              <img
+                src="/images/kreatywny_zespol.jpg"
+                alt="Gotowi na każde wyzwanie!"
+              />
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+      <Footer />
+    </>
+  );
 }
