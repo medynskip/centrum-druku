@@ -1,8 +1,8 @@
 import Head from "next/head";
 
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
-import ProductCard from "../components/productCard";
+import Navbar from "../../components/navbar";
+import Footer from "../../components/footer";
+import ProductCard from "../../components/productCard";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -42,22 +42,6 @@ function Druk({ products }) {
               }
             })}
           </Row>
-          <Row noGutters xs={2} md={4} lg={4}>
-            {products.map((product, i) => {
-              // return <div key={i}>{product.name}</div>
-              if (product.active) {
-                return <ProductCard key={product._id} product={product} />;
-              }
-            })}
-          </Row>
-          <Row noGutters xs={2} md={4} lg={4}>
-            {products.map((product, i) => {
-              // return <div key={i}>{product.name}</div>
-              if (product.active) {
-                return <ProductCard key={product._id} product={product} />;
-              }
-            })}
-          </Row>
         </Container>
       </section>
 
@@ -67,9 +51,7 @@ function Druk({ products }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(
-    "https://centrum-druku-api.herokuapp.com/api/product/get"
-  );
+  const res = await fetch("http://api.piotrmedynski.pl/product/get");
   const products = await res.json();
 
   return {

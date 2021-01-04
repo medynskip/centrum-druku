@@ -3,6 +3,8 @@ import Badge from "react-bootstrap/Badge";
 
 import Link from "next/link";
 
+import utils from "../utils/utils";
+
 const PostCard = (props) => {
   const shorthand = props.post.content.replace(/(<([^>]+)>)/gi, "");
   const date = new Date(props.post.added);
@@ -11,8 +13,10 @@ const PostCard = (props) => {
   } / ${date.getFullYear()} g: ${date.getHours()}:${(
     "0" + date.getMinutes()
   ).slice(-2)}`;
-  // const url = `/blog/${props.post.title}`;
-  const url = `/blog/${props.post._id}`;
+  const titleSlug = utils.slugify(props.post.title);
+
+  const url = `/blog/${titleSlug}`;
+  // const url = `/blog/${props.post._id}`;
 
   return (
     <Col className="post-card">

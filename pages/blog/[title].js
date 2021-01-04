@@ -8,6 +8,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
 
+import utils from "../../utils/utils";
+
 function Post({ post }) {
   const date = new Date(post.added);
   const displayDate = `${date.getDate()} / ${
@@ -57,13 +59,14 @@ function Post({ post }) {
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
-  const res = await fetch(
-    "https://centrum-druku-api.herokuapp.com/api/blog/get/active"
-  );
+  const res = await fetch("http://api.piotrmedynski.pl/blog/get/active");
   const posts = await res.json();
 
   // Get the paths we want to pre-render based on posts
-  const paths = posts.map((post) => `/blog/${post._id}`);
+  const paths = posts.map((post) => {
+    const titleSlug = utils.slugify(post.title);
+    return `/blog/${titleSlug}`;
+  });
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
@@ -74,14 +77,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   // params contains the post `id`.
   // If the route is like /posts/1, then params.id is 1
-  const res = await fetch(
-    `https://centrum-druku-api.herokuapp.com/api/blog/get/active`
-  );
-
+  const res = await fetch(`http://api.piotrmedynski.pl/blog/get/active`);
   const allPosts = await res.json();
   let post;
   allPosts.map((single) => {
-    if (single._id == params.title) {
+    const titleSlug = utils.slugify(single.title);
+    if (titleSlug == params.title) {
       post = { ...single };
     }
   });

@@ -1,8 +1,8 @@
 import Head from "next/head";
 
-import Navbar from "../components/navbar";
-import Footer from "../components/footer";
-import PostCard from "../components/postCard";
+import Navbar from "../../components/navbar";
+import Footer from "../../components/footer";
+import PostCard from "../../components/postCard";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -36,9 +36,7 @@ function Blog({ posts }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(
-    "https://centrum-druku-api.herokuapp.com/api/blog/get/active"
-  );
+  const res = await fetch("http://api.piotrmedynski.pl/blog/get/active");
   const posts = await res.json();
 
   return {
