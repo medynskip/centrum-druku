@@ -19,9 +19,9 @@ function ProductColumns({ product }) {
   const [order, setOrder] = useState({
     name: product.name,
     parameters: [],
-    amount: product.prices[0].amount,
+    amount: product.prices.length > 0 ? product.prices[0].amount : 0,
     multiplier: 1,
-    price: product.prices[0].price,
+    price: product.prices.length > 0 ? product.prices[0].price : 0,
   });
 
   const sendToStore = (params) => {
