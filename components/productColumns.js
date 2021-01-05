@@ -4,61 +4,54 @@ import Parameters from "./parameters";
 import Prices from "./prices";
 import Summary from "./summary";
 
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
-import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
 
-import Link from "next/link";
+import { connect } from "react-redux";
+import { updateOrder } from "../redux/actions/orderActions";
 
-function ProductColumns({ product }) {
-  const [order, setOrder] = useState({
-    name: product.name,
-    parameters: [],
-    amount: product.prices.length > 0 ? product.prices[0].amount : 0,
-    multiplier: 1,
-    price: product.prices.length > 0 ? product.prices[0].price : 0,
-  });
+function ProductColumns({ product, order, updateOrder }) {
+  useEffect(() => {
+    console.log(order);
+    updateOrder({
+      name: product.name,
+      amount: product.prices.length > 0 ? product.prices[0].amount : 0,
+      duration: product.prices.length > 0 ? product.duration : 0,
+      price: product.prices.length > 0 ? product.prices[0].price : 0,
+    });
+  }, [product]);
 
   const sendToStore = (params) => {
-    setOrder({
-      ...order,
-      ...params,
-    });
+    updateOrder(params);
   };
-  const priceToStore = (params) => {
-    setOrder({
-      ...order,
-      ...params,
-    });
-  };
+
+  if (product.parameters.length < 1) return <div>Produkt niedostępny</div>;
 
   return (
     <Row noGutters xs={1} md={1} lg={3}>
       <Col>
-        {product.parameters.length > 0 ? (
-          <Parameters
-            parameters={product.parameters}
-            sendToStore={sendToStore}
-          />
-        ) : null}
+        <Parameters parameters={product.parameters} sendToStore={sendToStore} />
       </Col>
       <Col>
-        {product.prices.length > 0 ? (
-          <Prices
-            prices={product.prices}
-            multiplier={order.multiplier}
-            priceToStore={priceToStore}
-          />
-        ) : null}
+        <Prices
+          prices={product.prices}
+          multiplier={order.multiplier}
+          priceToStore={sendToStore}
+        />
       </Col>
-      <Col>{product.prices.length > 0 ? <Summary order={order} /> : null}</Col>
+      <Col>
+        <Summary order={order} />
+      </Col>
     </Row>
   );
 }
 
-export default ProductColumns;
+const mapStateToProps = (state) => ({
+  order: { ...state.order },
+});
+
+const mapDispatchToProps = {
+  updateOrder: (order) => updateOrder(order),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductColumns);

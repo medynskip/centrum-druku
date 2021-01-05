@@ -1,64 +1,24 @@
-// import { GET_SINGLE_PRODUCT, GET_ALL_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from '../actions/types';
+import * as t from "../types";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
-    orders: [],
-    order: {
-        product: '',
-        parameters: [],
-        multiplier: 1,
-        price: 0
-    },
-    isUpdating: true,
-    isFresh: false
-}
+  name: "",
+  parameters: [],
+  amount: 0,
+  multiplier: 1,
+  duration: 0,
+  price: 0,
+};
 
-const orderReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'UPDATING':
-            return ({
-                ...state,
-                isUpdating: true,
-            })
-        case 'UPDATE_NEW_ORDER':
-            return ({
-                ...state,
-                order: {
-                    ...state.order,
-                    ...action.data
-                },
-                isUpdating: false,
-            })
-
-        case 'PLACE_ORDER':
-            return ({
-                ...state,
-                isUpdating: false,
-            })
-        case 'UPDATE_ORDER':
-            return ({
-                ...state,
-                isUpdating: false,
-                isFresh: false
-            })
-
-        case 'GET_ALL_ORDERS':
-            return ({
-                ...state,
-                orders: [...action.data],
-                isUpdating: false,
-                isFresh: true
-            })
-        case 'DELETE_ORDER':
-            return ({
-                ...state,
-                isUpdating: false,
-                isFresh: false
-            });
-
-
-        default:
-            return state;
-    }
-}
+const orderReducer = (state = { ...initialState }, action) => {
+  switch (action.type) {
+    case HYDRATE:
+      return { ...state, ...action.payload };
+    case t.UPDATE_ORDER:
+      return { ...state, ...action.payload };
+    default:
+      return { ...state };
+  }
+};
 
 export default orderReducer;

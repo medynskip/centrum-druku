@@ -61,7 +61,7 @@ export async function getStaticPaths() {
   const paths = products.map((product) => {
     if (product.active) {
       const nameSlug = utils.slugify(product.name);
-      return `/druk/${nameSlug}`;
+      return `/produkty/${nameSlug}`;
     }
   });
   return { paths, fallback: false };

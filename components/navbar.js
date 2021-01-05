@@ -34,14 +34,14 @@ const NavbarHeader = () => {
           className="justify-content-end"
         >
           <Nav>
-            <Link href="/">
+            {/* <Link href="/">
               <a className="nav-link">START</a>
+            </Link> */}
+            <Link href="/produkty">
+              <a className="nav-link">PRODUKTY</a>
             </Link>
             <Link href="/uslugi">
               <a className="nav-link">USŁUGI</a>
-            </Link>
-            <Link href="/druk">
-              <a className="nav-link">DRUK</a>
             </Link>
             <Link href="/blog">
               <a className="nav-link">BLOG</a>
