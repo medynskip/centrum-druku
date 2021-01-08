@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Layout from "../../components/layout";
 
+import ProductColumns from "../../components/productColumns";
 import ProductOther from "../../components/productOther";
 
 import Container from "react-bootstrap/Container";
@@ -19,11 +20,9 @@ import utils from "../../utils/utils";
 
 function Product({ product, allProducts }) {
   // const [selected, setSelected] = useState({})
-  const nameSlug = utils.slugify(product.name);
-
   return (
     <>
-      <Layout title={`${product.name} - druk najwyższej jakości`}>
+      <Layout title={`${product.name} - najlepsza cena i bogate opcje wydruku`}>
         <section className="print">
           <Container>
             <Row className="shop-item-header">
@@ -33,35 +32,8 @@ function Product({ product, allProducts }) {
               </h2>
               <Button variant="outline-primary">Powrót do listy</Button>
             </Row>
-            <p>
-              Pariatur aliqua velit proident quis deserunt. Culpa minim ipsum
-              cupidatat enim adipisicing Lorem Lorem irure ex voluptate et. Quis
-              dolore quis irure laboris pariatur. Consectetur dolor irure
-              nostrud sit ipsum ad magna qui nisi excepteur sunt non dolore. Do
-              do id do ex duis sit cupidatat amet enim et aute elit. Voluptate
-              sunt enim amet ipsum ipsum officia proident id ipsum. In nisi
-              officia veniam reprehenderit sit officia enim qui reprehenderit
-              exercitation consectetur sint dolore ipsum.
-            </p>
-            <p>
-              Tempor Lorem velit consectetur sunt. Sint nostrud laboris velit
-              laboris velit adipisicing commodo adipisicing irure. Est fugiat ea
-              dolore ex ea et. Deserunt magna qui labore in tempor commodo
-              excepteur. Anim minim eiusmod quis laboris enim pariatur proident
-              deserunt deserunt ad esse laborum do.
-            </p>
-            <p>
-              Duis consectetur sint proident adipisicing deserunt voluptate enim
-              aute qui dolor. Cillum irure laboris id reprehenderit
-              reprehenderit non. Ipsum tempor eiusmod deserunt laboris amet
-              velit in incididunt officia quis.
-            </p>
 
-            <Link href={`/zamowienie/${nameSlug}`}>
-              <a>
-                <Button>Zamów {product.name}</Button>
-              </a>
-            </Link>
+            <ProductColumns product={product} />
 
             <ProductOther products={allProducts} />
           </Container>
@@ -77,7 +49,7 @@ export async function getStaticPaths() {
   const paths = products.map((product) => {
     if (product.active) {
       const nameSlug = utils.slugify(product.name);
-      return `/produkty/${nameSlug}`;
+      return `/zamowienie/${nameSlug}`;
     }
   });
   return { paths, fallback: false };

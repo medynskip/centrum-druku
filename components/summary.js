@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 const Summary = (props) => {
   const history = useRouter();
   const handleClick = () => {
-    history.push("/zamowienie/");
+    history.push("/zamowienie/nowe");
   };
 
   return (

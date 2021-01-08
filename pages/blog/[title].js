@@ -1,7 +1,4 @@
-import Head from "next/head";
-
-import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
+import Layout from "../../components/layout";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -24,35 +21,26 @@ function Post({ post }) {
 
   return (
     <>
-      <Head>
-        <title>Centrum Druku - Twoja drukarnia internetowa</title>
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"
-          rel="stylesheet"
-        ></link>
-      </Head>
-      <Navbar />
+      <Layout title={post.title}>
+        <section className="blog">
+          <Container>
+            <Row>
+              <Col className="post-card">
+                <h2>{post.title}</h2>
+                <Badge variant="warning">{displayDate}</Badge>
+                <div className="post-img">
+                  <img src={post.image} />
+                </div>
 
-      <section className="blog">
-        <Container>
-          <Row>
-            <Col className="post-card">
-              <h2>{post.title}</h2>
-              <Badge variant="warning">{displayDate}</Badge>
-              <div className="post-img">
-                <img src={post.image} />
-              </div>
-
-              <div
-                className="post-full-text"
-                dangerouslySetInnerHTML={htmlContent()}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </section>
-      <Footer />
+                <div
+                  className="post-full-text"
+                  dangerouslySetInnerHTML={htmlContent()}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </Layout>
     </>
   );
 }

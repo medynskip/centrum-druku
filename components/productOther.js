@@ -21,7 +21,7 @@ function ProductOther({ products }) {
         {products.map((product, i) => {
           const nameSlug = utils.slugify(product.name);
           return (
-            <Link key={i} href={`/druk/${nameSlug}`}>
+            <Link key={i} href={`/produkty/${nameSlug}`}>
               <a>
                 <Badge pill variant="dark">
                   {product.name}
