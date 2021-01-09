@@ -46,25 +46,18 @@ function Post({ post }) {
 }
 
 export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
   const res = await fetch("http://api.piotrmedynski.pl/blog/get/active");
   const posts = await res.json();
 
-  // Get the paths we want to pre-render based on posts
   const paths = posts.map((post) => {
     const titleSlug = utils.slugify(post.title);
     return `/blog/${titleSlug}`;
   });
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: false } means other routes should 404.
   return { paths, fallback: false };
 }
 
-// This also gets called at build time
 export async function getStaticProps({ params }) {
-  // params contains the post `id`.
-  // If the route is like /posts/1, then params.id is 1
   const res = await fetch(`http://api.piotrmedynski.pl/blog/get/active`);
   const allPosts = await res.json();
   let post;
@@ -74,8 +67,6 @@ export async function getStaticProps({ params }) {
       post = { ...single };
     }
   });
-
-  // Pass post data to the page via props
   return { props: { post } };
 }
 

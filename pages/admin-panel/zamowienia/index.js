@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import AdminLayout from "./../../../components/adminLayout";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -87,27 +89,7 @@ const OrdersList = ({ orders }) => {
   };
 
   return (
-    <>
-      <Navbar fixed="left" className="admin-nav">
-        <Container>
-          <Navbar.Brand href="/admin-panel/">
-            CentrumDruku Admin Panel
-          </Navbar.Brand>
-          {/* <Nav className="mr-auto"> */}
-          <Navbar.Collapse className="justify-content-end">
-            <Link href="/admin-panel/produkty">
-              <a>PRODUKTY</a>
-            </Link>
-            <Link href="/admin-panel/zamowienia">
-              <a>ZAMÓWIENIA</a>
-            </Link>
-            <Link href="/admin-panel/blog">
-              <a>BLOG</a>
-            </Link>
-          </Navbar.Collapse>
-          {/* </Nav> */}
-        </Container>
-      </Navbar>
+    <AdminLayout>
       <Container>
         <h3>Zamówienia</h3>
         <ListGroup>
@@ -126,7 +108,7 @@ const OrdersList = ({ orders }) => {
           )}
         </ListGroup>
       </Container>
-    </>
+    </AdminLayout>
   );
 };
 
