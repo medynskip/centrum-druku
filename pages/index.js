@@ -37,7 +37,7 @@ export default function Home() {
               Poznaj nasze:
               <div>
                 <LinkButton to="/uslugi/" text="usługi" varinat="primary" />
-                <LinkButton to="/druk" text="produkty" variant="success" />
+                <LinkButton to="/produkty/" text="produkty" variant="success" />
               </div>
             </div>
             <div className="social">

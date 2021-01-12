@@ -12,11 +12,11 @@ const options = {
       // e.g. domain, username, password, 2FA token, etc.
       credentials: {
         username: {
-          label: "Użytkownik",
+          // label: "Użytkownik",
           type: "text",
           placeholder: "username",
         },
-        password: { label: "Hasło", type: "password" },
+        password: { type: "password" },
       },
       authorize: async (credentials) => {
         // Add logic here to look up the user from the credentials supplied
@@ -38,7 +38,10 @@ const options = {
       },
     }),
   ],
-
+  pages: {
+    signIn: "/admin-panel/signin",
+  },
+  site: process.env.NEXTAUTH_URL,
   // A database is optional, but required to persist accounts in a database
   //   database: process.env.DATABASE_URL,
 };

@@ -6,6 +6,7 @@ import AdminNavbar from "./adminNavbar";
 
 const Layout = ({ children }) => {
   const [session, loading] = useSession();
+  console.log(process.env.NEXT_PUBLIC_NEXTAUTH_URL);
   return (
     <>
       <Head>
@@ -16,15 +17,15 @@ const Layout = ({ children }) => {
         ></link>
         <title>Panel Administracyjny - Centrum Druku Online</title>
       </Head>
+      <AdminNavbar />
       {!session && (
-        <>
+        <div className="signin-link">
           Not signed in <br />
           <button onClick={signIn}>Sign in</button>
-        </>
+        </div>
       )}
       {session && (
         <>
-          <AdminNavbar />
           <div className="content">{children}</div>
           {/* Signed in as {session.user.name} <br />
           <button onClick={signOut}>Sign out</button> */}

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { useState } from "react";
 
-import AdminLayout from "./../../../components/adminLayout";
+import AdminLayout from "../../../components/admin/adminLayout";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -64,12 +64,13 @@ const AddNewProduct = (props) => {
 
 const EditBtn = (props) => {
   //   const history = useHistory();
-  const editProduct = () => {
-    // const url = `/admin/produkty/edytuj/${props.name}/${props.id}`;
-    // history.push(url);
-  };
+  // const editProduct = () => {
+  // const url = `/admin/produkty/edytuj/${props.name}/${props.id}`;
+  // history.push(url);
+  // };
   return (
-    <Button variant="primary" size="sm" onClick={editProduct}>
+    <Button variant="primary" size="sm">
+      {/* <Button variant="primary" size="sm" onClick={editProduct}> */}
       edit
     </Button>
   );
@@ -117,7 +118,11 @@ const SingleProduct = ({ product, deleteOne }) => {
           </Badge>
         </div>
         <div>
-          <EditBtn id={product._id} name={product.name} />
+          <Link href={`/admin-panel/produkty/${product._id}`}>
+            <a>
+              <EditBtn id={product._id} name={product.name} />
+            </a>
+          </Link>
           <DeleteBtn id={product._id} deleteOne={deleteOne} />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import AdminLayout from "./../../../components/adminLayout";
+import AdminLayout from "./../../../components/admin/adminLayout";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";

@@ -17,19 +17,22 @@ const AdminNavbar = () => {
           CentrumDruku Admin Panel
         </Navbar.Brand>
         {/* <Nav className="mr-auto"> */}
-        <Navbar.Collapse className="justify-content-end">
-          <Link href="/admin-panel/produkty">
-            <a>PRODUKTY</a>
-          </Link>
-          <Link href="/admin-panel/zamowienia">
-            <a>ZAMÓWIENIA</a>
-          </Link>
-          <Link href="/admin-panel/blog">
-            <a>BLOG</a>
-          </Link>
-        </Navbar.Collapse>
-        Witaj {session.user.name}
-        <button onClick={signOut}>Sign out</button>
+        {session && (
+          <Navbar.Collapse className="justify-content-end">
+            <Link href="/admin-panel/produkty">
+              <a>PRODUKTY</a>
+            </Link>
+            <Link href="/admin-panel/zamowienia">
+              <a>ZAMÓWIENIA</a>
+            </Link>
+            <Link href="/admin-panel/blog">
+              <a>BLOG</a>
+            </Link>
+            Witaj {session.user.name}
+            <button onClick={signOut}>Sign out</button>
+          </Navbar.Collapse>
+        )}
+
         {/* </Nav> */}
       </Container>
     </Navbar>

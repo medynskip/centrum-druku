@@ -1,4 +1,5 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import root from "./reducers/root";
 
@@ -17,7 +18,10 @@ const reducer = (state, action) => {
   }
 };
 
-const makeStore = (context) => createStore(reducer);
+const middleware = [thunk];
+
+const makeStore = (context) =>
+  createStore(reducer, applyMiddleware(...middleware));
 
 export const wrapper = createWrapper(makeStore, { debug: true });
 // export default store;

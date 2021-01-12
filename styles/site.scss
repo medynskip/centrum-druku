@@ -103,7 +103,8 @@ header {
   }
 
   .action-invite {
-    display: none;
+    display: inline-block;
+    // display: none;
     font-size: 2rem;
   }
 
@@ -717,14 +718,10 @@ footer {
     .header {
       height: 100%;
 
-      .action-invite {
-        display: inline-block;
-
-        button {
-          margin-right: 10px;
-          font-size: 1.2rem;
-          padding: 2px 10px;
-        }
+      .action-invite button {
+        margin-right: 10px;
+        font-size: 1.2rem;
+        padding: 2px 10px;
       }
     }
   }

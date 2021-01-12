@@ -12,7 +12,6 @@ import { updateOrder } from "../redux/actions/orderActions";
 
 function ProductColumns({ product, order, updateOrder }) {
   useEffect(() => {
-    console.log(order);
     updateOrder({
       name: product.name,
       amount: product.prices.length > 0 ? product.prices[0].amount : 0,
