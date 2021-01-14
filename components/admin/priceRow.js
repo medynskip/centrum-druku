@@ -1,28 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCoffee,
-  faEdit,
-  faTrashAlt,
-  faSave,
-  faIcons,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faSave } from "@fortawesome/free-solid-svg-icons";
 
-const ValueRow = ({ el, deleteValue, updateValue }) => {
-  const [values, setValues] = useState({
-    name: el.name,
-    multiplier: el.multiplier,
-  });
+const PriceRow = ({ priceEntry, product, update }) => {
   const [editable, setEditable] = useState(false);
-  // const [icon, setIcon] = useState("edit");
+
+  const [value, setValue] = useState({
+    amount: priceEntry.amount,
+    price: priceEntry.price,
+  });
 
   const handleChange = (e) => {
-    setValues({
-      ...values,
+    setValue({
+      ...value,
       [e.target.name]: e.target.value,
     });
   };
@@ -30,33 +24,43 @@ const ValueRow = ({ el, deleteValue, updateValue }) => {
   const editThis = () => {
     setEditable((prev) => !prev);
     if (editable) {
-      updateValue(values, el._id);
+      updatePrice();
     }
   };
 
+  const updatePrice = () => {
+    const i = product.prices.findIndex((x) => x._id == priceEntry._id);
+    const newPrices = [...product.prices];
+    newPrices[i] = { ...value };
+    update(newPrices);
+  };
+
   const deleteThis = () => {
-    deleteValue(el._id);
+    const newPrices = product.prices.filter(
+      (each) => each._id != priceEntry._id
+    );
+    update(newPrices);
   };
 
   return (
     <tr className="row">
-      <td className="col-8">
+      <td>
         <Form.Control
-          name="name"
-          value={values.name}
+          name="amount"
+          value={value.amount}
           onChange={handleChange}
           disabled={!editable}
         />
       </td>
-      <td className="col-2">
+      <td>
         <Form.Control
-          name="multiplier"
-          value={values.multiplier}
+          name="price"
+          value={value.price}
           onChange={handleChange}
           disabled={!editable}
         />
       </td>
-      <td className="col-2">
+      <td>
         <Button
           onClick={editThis}
           variant={editable ? "success" : "primary"}
@@ -72,4 +76,4 @@ const ValueRow = ({ el, deleteValue, updateValue }) => {
   );
 };
 
-export default ValueRow;
+export default PriceRow;

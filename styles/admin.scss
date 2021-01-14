@@ -1,7 +1,4 @@
 body {
-  // background: rgb(230, 230, 230);
-  // color: rgb(39, 25, 25);
-  // padding: 20px;
   margin-bottom: 50px;
 }
 
@@ -69,6 +66,16 @@ body {
 
 .top-margin {
   margin-top: 15px;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .space-between {

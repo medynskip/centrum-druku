@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
 
 import { connect } from "react-redux";
 import {
@@ -9,29 +8,17 @@ import {
 
 import Link from "next/link";
 
-// import { connect } from "react-redux";
-// import {
-//   getOneProduct,
-//   updateProduct,
-// } from "../../../store/actions/productActions";
-
 import Spinner from "react-bootstrap/Spinner";
-import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Navbar from "react-bootstrap/Navbar";
-import Alert from "react-bootstrap/Alert";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import FormControl from "react-bootstrap/FormControl";
 
 import AdminLayout from "./../../../components/admin/adminLayout";
 import ProductHeader from "./../../../components/admin/productHeader";
 import ProductParameters from "./../../../components/admin/productParameters";
+import ProductPrices from "./../../../components/admin/productPrices";
 
 const ProductCard = ({ id, initProduct, updateProduct, product }) => {
   useEffect(() => {
@@ -57,14 +44,42 @@ const ProductCard = ({ id, initProduct, updateProduct, product }) => {
       <Container className="product-card">
         <h3>Karta produktu</h3>
         <ProductHeader product={product} update={update} />
-        <Tabs defaultActiveKey="parametry">
+
+        {/* <Accordion defaultActiveKey="0">
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="0">
+              Click me!
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <Card.Body>Hello! I'm the body</Card.Body>
+            </Accordion.Collapse>
+          </Card>
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="1">
+              Click me!
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="1">
+              <Card.Body>Hello! I'm another body</Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion> */}
+
+        <Tabs>
           <Tab eventKey="parametry" title="Parametry">
             <ProductParameters product={product} update={update} />
           </Tab>
-          {/* <Tab eventKey="ceny" title="Ceny">
-            <ProductPrices product={product} />
-          </Tab> */}
+          <Tab eventKey="ceny" title="Ceny">
+            <ProductPrices product={product} update={update} />
+          </Tab>
         </Tabs>
+        {/* <Tabs defaultActiveKey="parametry">
+          <Tab eventKey="parametry" title="Parametry">
+            <ProductParameters product={product} update={update} />
+          </Tab>
+          <Tab eventKey="ceny" title="Ceny">
+            <ProductPrices product={product} update={update} />
+          </Tab>
+        </Tabs> */}
       </Container>
       <Navbar fixed="bottom" bg="dark" expand="lg">
         <Container>
