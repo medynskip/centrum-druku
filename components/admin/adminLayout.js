@@ -3,10 +3,10 @@ import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/client";
 
 import AdminNavbar from "./adminNavbar";
+import AdminSidebar from "./adminSidebar";
 
 const Layout = ({ children }) => {
   const [session, loading] = useSession();
-  console.log(process.env.NEXT_PUBLIC_NEXTAUTH_URL);
   return (
     <>
       <Head>
@@ -26,7 +26,8 @@ const Layout = ({ children }) => {
       )}
       {session && (
         <>
-          <div className="content">{children}</div>
+          <AdminSidebar />
+          <div className="admin-content">{children}</div>
           {/* Signed in as {session.user.name} <br />
           <button onClick={signOut}>Sign out</button> */}
         </>

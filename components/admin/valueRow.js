@@ -4,13 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCoffee,
-  faEdit,
-  faTrashAlt,
-  faSave,
-  faIcons,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faSave } from "@fortawesome/free-solid-svg-icons";
 
 const ValueRow = ({ el, deleteValue, updateValue }) => {
   const [values, setValues] = useState({
@@ -18,7 +12,6 @@ const ValueRow = ({ el, deleteValue, updateValue }) => {
     multiplier: el.multiplier,
   });
   const [editable, setEditable] = useState(false);
-  // const [icon, setIcon] = useState("edit");
 
   const handleChange = (e) => {
     setValues({

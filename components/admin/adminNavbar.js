@@ -19,7 +19,7 @@ const AdminNavbar = () => {
         {/* <Nav className="mr-auto"> */}
         {session && (
           <Navbar.Collapse className="justify-content-end">
-            <Link href="/admin-panel/produkty">
+            {/* <Link href="/admin-panel/produkty">
               <a>PRODUKTY</a>
             </Link>
             <Link href="/admin-panel/zamowienia">
@@ -27,7 +27,7 @@ const AdminNavbar = () => {
             </Link>
             <Link href="/admin-panel/blog">
               <a>BLOG</a>
-            </Link>
+            </Link> */}
             Witaj {session.user.name}
             <button onClick={signOut}>Sign out</button>
           </Navbar.Collapse>

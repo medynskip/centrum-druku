@@ -43,7 +43,7 @@ const PriceRow = ({ priceEntry, product, update }) => {
   };
 
   return (
-    <tr className="row">
+    <tr>
       <td>
         <Form.Control
           name="amount"

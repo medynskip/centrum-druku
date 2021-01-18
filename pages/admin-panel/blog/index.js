@@ -13,16 +13,13 @@ import Spinner from "react-bootstrap/Spinner";
 import Navbar from "react-bootstrap/Navbar";
 
 const EditBtn = (props) => {
-  //   const history = useHistory();
-  const editProduct = () => {
-    // const url = `/admin/blog/edytuj/${props.id}`;
-    // history.push(url);
-  };
-  return (
-    <Button variant="primary" size="sm" onClick={editProduct}>
-      edit
-    </Button>
-  );
+  // //   const history = useHistory();
+  // const editProduct = () => {
+  //   // const url = `/admin/blog/edytuj/${props.id}`;
+  //   // history.push(url);
+  // };
+  // return (
+  // );
 };
 
 const DeleteBtn = (props) => {
@@ -69,7 +66,13 @@ const SinglePost = ({ post, deletePost }) => {
           </Badge>
         </div>
         <div>
-          <EditBtn id={post._id} />
+          <Link href={`/admin-panel/blog/${post._id}`}>
+            <a>
+              <Button variant="primary" size="sm">
+                edit
+              </Button>
+            </a>
+          </Link>
           <DeleteBtn deletePost={deletePasser} />
         </div>
       </div>

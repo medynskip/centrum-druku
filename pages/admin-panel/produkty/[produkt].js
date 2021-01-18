@@ -16,9 +16,9 @@ import Tab from "react-bootstrap/Tab";
 import Container from "react-bootstrap/Container";
 
 import AdminLayout from "./../../../components/admin/adminLayout";
-import ProductHeader from "./../../../components/admin/productHeader";
 import ProductParameters from "./../../../components/admin/productParameters";
 import ProductPrices from "./../../../components/admin/productPrices";
+import ProductDescription from "./../../../components/admin/productDescription";
 
 const ProductCard = ({ id, initProduct, updateProduct, product }) => {
   useEffect(() => {
@@ -43,28 +43,10 @@ const ProductCard = ({ id, initProduct, updateProduct, product }) => {
     <AdminLayout>
       <Container className="product-card">
         <h3>Karta produktu</h3>
-        <ProductHeader product={product} update={update} />
-
-        {/* <Accordion defaultActiveKey="0">
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-              Click me!
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>Hello! I'm the body</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
-              Click me!
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>Hello! I'm another body</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion> */}
-
         <Tabs>
+          <Tab eventKey="opis" title="Opis">
+            <ProductDescription product={product} update={update} />
+          </Tab>
           <Tab eventKey="parametry" title="Parametry">
             <ProductParameters product={product} update={update} />
           </Tab>
@@ -72,14 +54,6 @@ const ProductCard = ({ id, initProduct, updateProduct, product }) => {
             <ProductPrices product={product} update={update} />
           </Tab>
         </Tabs>
-        {/* <Tabs defaultActiveKey="parametry">
-          <Tab eventKey="parametry" title="Parametry">
-            <ProductParameters product={product} update={update} />
-          </Tab>
-          <Tab eventKey="ceny" title="Ceny">
-            <ProductPrices product={product} update={update} />
-          </Tab>
-        </Tabs> */}
       </Container>
       <Navbar fixed="bottom" bg="dark" expand="lg">
         <Container>

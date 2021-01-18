@@ -3,8 +3,6 @@ import thunk from "redux-thunk";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 import root from "./reducers/root";
 
-// const store = createStore(root);
-
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
     const nextState = {
@@ -24,4 +22,3 @@ const makeStore = (context) =>
   createStore(reducer, applyMiddleware(...middleware));
 
 export const wrapper = createWrapper(makeStore, { debug: true });
-// export default store;

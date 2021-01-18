@@ -1,14 +1,5 @@
 import * as t from "../types";
 
-// export const initProduct = (product) => {
-//   return (dispatch) => {
-//     dispatch({
-//       type: t.INIT_PRODUCT,
-//       payload: product,
-//     });
-//   };
-// };
-
 export const initProduct = (id) => {
   return (dispatch) => {
     dispatch({
@@ -22,15 +13,14 @@ export const initProduct = (id) => {
           payload: oneProduct,
         });
       });
-    // console.log("tutaj 2");
   };
 };
 
 export const updateProduct = (updatedProduct) => {
   return (dispatch) => {
-    dispatch({
-      type: t.LOADING,
-    });
+    // dispatch({
+    //   type: t.LOADING,
+    // });
     fetch(`http://api.piotrmedynski.pl/product/update/${updatedProduct._id}`, {
       method: "PUT",
       headers: {

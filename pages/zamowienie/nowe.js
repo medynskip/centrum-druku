@@ -1,19 +1,10 @@
 import { connect } from "react-redux";
-import { updateOrder } from "../../redux/actions/orderActions";
+import { updateOrder } from "../../redux/actions/clientActions";
 
 import { useRouter } from "next/router";
-import React, { Component, useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 
 import utils from "../../utils/utils";
-
-import ReactDOM from "react-dom";
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
 
 import Layout from "../../components/layout";
 
@@ -21,13 +12,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
-import Badge from "react-bootstrap/Badge";
-import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Table from "react-bootstrap/Table";
 import FormControl from "react-bootstrap/FormControl";
 
 const ValidationErrors = (props) => {
@@ -55,7 +42,6 @@ const Zamowienie = (props) => {
     history.push(`/produkty/${utils.slugify(props.order.name)}`);
   };
   const [errorEl, setErrorEl] = useState([]);
-  //    const history = useHistory();
   const [company, setCompany] = useState(false);
   const [accepted, setAccepted] = useState(false);
   const [files, setFiles] = useState(null);
@@ -83,7 +69,6 @@ const Zamowienie = (props) => {
 
   const handleFile = (e) => {
     setFiles(e.target.files);
-    console.log(files);
   };
 
   const handleSubmit = (e) => {
@@ -92,7 +77,6 @@ const Zamowienie = (props) => {
 
   const handleCheckbox = (e) => {
     setCompany(e.target.checked);
-    console.log(company);
   };
 
   const handleAccepted = (e) => {
@@ -323,10 +307,8 @@ const Zamowienie = (props) => {
   );
 };
 
-// export default Zamowienie;
-
 const mapStateToProps = (state) => ({
-  order: { ...state.order },
+  order: { ...state.client },
 });
 
 const mapDispatchToProps = {
