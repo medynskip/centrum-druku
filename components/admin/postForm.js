@@ -10,15 +10,14 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
-
-// import AdminLayout from "./../../../components/admin/adminLayout";
+import BottomBar from "./bottomBar";
 
 const PostForm = ({ post, sendToStore }) => {
   const [values, setPost] = useState({
     title: post.title,
     author: post.author,
     image: post.image,
-    // active: post.active,
+    modified: false,
   });
 
   const [active, setActive] = useState(post.active);
@@ -28,6 +27,7 @@ const PostForm = ({ post, sendToStore }) => {
     setPost({
       ...values,
       [e.target.name]: e.target.value,
+      modified: true,
     });
   };
 
@@ -53,68 +53,87 @@ const PostForm = ({ post, sendToStore }) => {
       active: active,
       content: text,
     });
+    setPost({
+      ...values,
+      modified: false,
+    });
   };
 
   return (
-    <Form>
-      <Button
-        onClick={activate}
-        variant={active ? "danger" : "success"}
-        size="sm"
-      >
-        {active ? "Wyłącz wpis" : "Aktywuj wpis"}
-      </Button>
-      <Form.Group>
-        <Form.Label>Tytuł wpisu *</Form.Label>
-        <Form.Control
-          name="title"
-          onChange={handleChange}
-          placeholder=""
-          value={values.title}
-          required
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Autor *</Form.Label>
-        <Form.Control
-          name="author"
-          onChange={handleChange}
-          placeholder=""
-          value={values.author}
-          required
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Podaj link do zdjęcia *</Form.Label>
-        <Form.Control
-          name="image"
-          onChange={handleChange}
-          placeholder="Podaj poprawny link obrazu..."
-          value={values.image}
-          required
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Treść wpisu </Form.Label>
-        <ReactQuill onChange={setText} theme="snow" value={text} />
-      </Form.Group>
-      {/* <Form.Group>
-        <Form.Check
-          name="active"
-          onChange={handleChange}
-          type="checkbox"
-          label="Aktywny"
-          checked={values.active}
-        />
-      </Form.Group> */}
+    <>
+      <Form>
+        <Button
+          onClick={activate}
+          variant={active ? "danger" : "success"}
+          size="sm"
+        >
+          {active ? "Wyłącz wpis" : "Aktywuj wpis"}
+        </Button>
+        <Form.Group>
+          <Form.Label>Tytuł wpisu *</Form.Label>
+          <Form.Control
+            name="title"
+            onChange={handleChange}
+            placeholder=""
+            value={values.title}
+            required
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Autor *</Form.Label>
+          <Form.Control
+            name="author"
+            onChange={handleChange}
+            placeholder=""
+            value={values.author}
+            required
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Podaj link do zdjęcia *</Form.Label>
+          <Form.Control
+            name="image"
+            onChange={handleChange}
+            placeholder="Podaj poprawny link obrazu..."
+            value={values.image}
+            required
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Treść wpisu </Form.Label>
+          <ReactQuill onChange={setText} theme="snow" value={text} />
+        </Form.Group>
+      </Form>
+      <BottomBar
+        exit="/admin-panel/blog"
+        handleSubmit={handleSubmit}
+        modified={values.modified}
+      />
 
-      <Link href="/admin-panel/blog/">
+      {/* <Navbar fixed="bottom" bg="dark" expand="lg">
+        <Container>
+          <Link href="/admin-panel/blog">
+            <a>
+              <Button variant="warning">Wyjdz</Button>
+            </a>
+          </Link>
+          <Button
+            variant={status.modified ? "success" : "primary"}
+            onClick={handleSubmit}
+            disabled={status.modified ? false : true}
+          >
+            {status.modified ? "Zapisz" : "Aktualne"}
+          </Button>
+        </Container>
+      </Navbar> */}
+
+      {/* <Link href="/admin-panel/blog/">
         <a>
           <Button variant="danger">Zamknij</Button>
         </a>
       </Link>
-      <Button onClick={handleSubmit}>Zapisz</Button>
-    </Form>
+      <Button onClick={handleSubmit}>Zapisz</Button> */}
+    </>
   );
 };
 

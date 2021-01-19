@@ -20,10 +20,12 @@ const OrderRow = ({ order, deleteOrder }) => {
     <ListGroup.Item>
       <div className="space-between">
         <div>
-          <h5>{order.product}</h5>
+          <h5>
+            {order._id} - {order.product}
+          </h5>
           <Badge variant="warning">{order.status}</Badge>
           <Badge variant="primary">{displayDate}</Badge>
-          <Badge variant="primary">{order.price},00 zł netto</Badge>
+          <Badge variant="primary">{order.value},00 zł netto</Badge>
           <Badge variant="primary">{order.volume} szt.</Badge>
           <Badge variant="success">
             {order.files.length > 0 ? "PLIKI" : "BEZ PLIKÓW"}

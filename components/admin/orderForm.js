@@ -12,6 +12,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 
+import BottomBar from "./bottomBar";
+
 const OrderForm = ({ order, sendToStore }) => {
   const router = useRouter();
 
@@ -132,21 +134,19 @@ const OrderForm = ({ order, sendToStore }) => {
               </li>
               <li>
                 <span>Czas realizacji:</span>{" "}
-                <span>{order.deadline} dni robocze</span>
+                <span>{order.duration} dni robocze</span>
               </li>
               <li>
                 <span>Nakład:</span> <span>{order.volume} szt.</span>
               </li>
               <li>
                 <span>Cena netto:</span>{" "}
-                <span>
-                  {(order.price * order.multiplier).toFixed(0)},00 zł{" "}
-                </span>
+                <span>{order.value.toFixed(0)},00 zł </span>
               </li>
               <li>
                 <span>Cena brutto:</span>{" "}
                 <span>
-                  {(order.price * order.multiplier * 1.23).toFixed(0)}
+                  {(order.value * 1.23).toFixed(0)}
                   ,00 zł{" "}
                 </span>
               </li>
@@ -192,7 +192,13 @@ const OrderForm = ({ order, sendToStore }) => {
         </Row>
       </Container>
 
-      <Navbar fixed="bottom" bg="dark" expand="lg">
+      <BottomBar
+        exit="/admin-panel/zamowienia"
+        handleSubmit={handleSubmit}
+        modified={status.modified}
+      />
+
+      {/* <Navbar fixed="bottom" bg="dark" expand="lg">
         <Container>
           <Link href="/admin-panel/zamowienia">
             <a>
@@ -207,7 +213,7 @@ const OrderForm = ({ order, sendToStore }) => {
             {status.modified ? "Zapisz" : "Aktualne"}
           </Button>
         </Container>
-      </Navbar>
+      </Navbar> */}
     </>
   );
 };

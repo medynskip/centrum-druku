@@ -26,23 +26,4 @@ export const updateOrder = (order) => {
       body: JSON.stringify(order),
     });
   };
-  //   return (dispatch) => {
-  //     dispatch({
-  //       type: t.LOADING,
-  //     });
-  //     fetch(`http://api.piotrmedynski.pl/product/update/${updatedProduct._id}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(updatedProduct),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((resJson) => {
-  //         dispatch({
-  //           type: t.UPDATE_PRODUCT,
-  //           payload: resJson,
-  //         });
-  //       });
-  //   };
 };

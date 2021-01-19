@@ -19,7 +19,6 @@ import Link from "next/link";
 import utils from "../../utils/utils";
 
 function Product({ product, allProducts }) {
-  // const [selected, setSelected] = useState({})
   return (
     <>
       <Layout title={`${product.name} - najlepsza cena i bogate opcje wydruku`}>
@@ -44,19 +43,19 @@ function Product({ product, allProducts }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch("http://api.piotrmedynski.pl/product/get");
+  const res = await fetch("http://api.piotrmedynski.pl/product/get/active");
   const products = await res.json();
   const paths = products.map((product) => {
-    if (product.active) {
-      const nameSlug = utils.slugify(product.name);
-      return `/zamowienie/${nameSlug}`;
-    }
+    // if (product.active) {
+    const nameSlug = utils.slugify(product.name);
+    return `/zamowienie/${nameSlug}`;
+    // }
   });
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://api.piotrmedynski.pl/product/get`);
+  const res = await fetch(`http://api.piotrmedynski.pl/product/get/active`);
   const allProducts = await res.json();
   let product;
   allProducts.map((single) => {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import AdminLayout from "./../../../components/admin/adminLayout";
 
@@ -12,88 +13,44 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Navbar from "react-bootstrap/Navbar";
 
-const EditBtn = (props) => {
-  // //   const history = useHistory();
-  // const editProduct = () => {
-  //   // const url = `/admin/blog/edytuj/${props.id}`;
-  //   // history.push(url);
-  // };
-  // return (
-  // );
-};
+import PostRow from "./../../../components/admin/postRow";
+import PostNew from "./../../../components/admin/postNew";
 
-const DeleteBtn = (props) => {
-  const deleteThis = () => {
-    const approve = confirm("Potwierdź usunięcie produktu");
-    if (approve) {
-      props.deletePost();
-    }
-  };
-  return (
-    <Button variant="danger" size="sm" onClick={deleteThis}>
-      Delete
-    </Button>
-  );
-};
-
-const SinglePost = ({ post, deletePost }) => {
-  //   const history = useHistory();
-  const date = new Date(post.added);
-
-  const variant = (a) => {
-    // return <Badge variant={variant(post.active)}></Badge>
-    return (
-      <Badge variant={a ? "success" : "secondary"}>
-        {" "}
-        {a ? "aktywny" : "nieaktywny"}
-      </Badge>
-    );
-  };
-
-  const deletePasser = () => {
-    // deletePost(post._id);
-  };
-
-  return (
-    <ListGroup.Item>
-      <div className="space-between">
-        <div>
-          <h5>{post.title}</h5>
-          {variant(post.active)}
-          <Badge variant="primary">
-            {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} g:{" "}
-            {date.getHours()}:{date.getMinutes()}
-          </Badge>
-        </div>
-        <div>
-          <Link href={`/admin-panel/blog/${post._id}`}>
-            <a>
-              <Button variant="primary" size="sm">
-                edit
-              </Button>
-            </a>
-          </Link>
-          <DeleteBtn deletePost={deletePasser} />
-        </div>
-      </div>
-    </ListGroup.Item>
-  );
-};
+// const DeleteBtn = (props) => {
+//   const deleteThis = () => {
+//     const approve = confirm("Potwierdź usunięcie produktu");
+//     if (approve) {
+//       props.deletePost();
+//     }
+//   };
+//   return (
+//     <Button variant="danger" size="sm" onClick={deleteThis}>
+//       Delete
+//     </Button>
+//   );
+// };
 
 const PostsList = ({ posts }) => {
-  //   const history = useHistory();
+  const router = useRouter();
 
-  //   useEffect(() => {
-  //     props.getAllPosts();
-  //   }, []);
-
-  const deletePost = () => {
-    // props.deletePost(id);
-    // props.getAllPosts();
+  const addPost = (post) => {
+    fetch("http://api.piotrmedynski.pl/blog/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    }).then(() => {
+      router.replace(router.asPath);
+    });
   };
 
-  const handleClick = () => {
-    // history.push("/admin/blog/nowy/");
+  const deletePost = (postID) => {
+    fetch(`http://api.piotrmedynski.pl/blog/delete/${postID}`, {
+      method: "DELETE",
+    }).then(() => {
+      router.replace(router.asPath);
+    });
   };
 
   return (
@@ -104,11 +61,7 @@ const PostsList = ({ posts }) => {
           {posts.length > 0 ? (
             posts.map((post) => {
               return (
-                <SinglePost
-                  key={post._id}
-                  post={post}
-                  deletePost={deletePost}
-                />
+                <PostRow key={post._id} post={post} deletePost={deletePost} />
               );
             })
           ) : (
@@ -117,9 +70,11 @@ const PostsList = ({ posts }) => {
             </Alert>
           )}
         </ListGroup>
-        <Button variant="success" onClick={handleClick}>
+        <PostNew addPost={addPost} />
+
+        {/* <Button variant="success" onClick={handleClick}>
           Dodaj nowy wpis
-        </Button>
+        </Button> */}
       </Container>
     </AdminLayout>
   );

@@ -29,18 +29,6 @@ const PostEdit = ({ id, post, initPost, updatePost }) => {
     });
   };
 
-  // const data = {
-  //   ...post,
-  //   content: text,
-  // };
-  // !id ? props.addPost(data) : props.updatePost(id, data);
-  // history.push("/admin/blog");
-  //   };
-
-  //   const handleExit = () => {
-  //     history.push("/admin/blog");
-  //   };
-
   if (post.loading)
     return (
       <AdminLayout>

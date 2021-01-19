@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+// import Link from "next/link";
+import LinkItem from "./link";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 
 const NavbarHeader = () => {
-  const [scroll, setScroll] = useState(true);
+  // const [scroll, setScroll] = useState(true);
 
-  useEffect(() => {
-    document.addEventListener("scroll", () => {
-      const scrollCheck = window.scrollY < 100;
-      if (scrollCheck !== scroll) {
-        setScroll(scrollCheck);
-      }
-    });
-  });
+  // useEffect(() => {
+  //   document.addEventListener("scroll", () => {
+  //     const scrollCheck = window.scrollY < 100;
+  //     if (scrollCheck !== scroll) {
+  //       setScroll(scrollCheck);
+  //     }
+  //   });
+  // });
 
   return (
     <Navbar
       collapseOnSelect
       expand="lg"
       fixed="top"
-      className={scroll ? "top-nav" : "top-nav scrolled"}
+      className="top-nav scrolled"
     >
       <Container>
         <Navbar.Brand href="/">
@@ -37,18 +38,18 @@ const NavbarHeader = () => {
             {/* <Link href="/">
               <a className="nav-link">START</a>
             </Link> */}
-            <Link href="/produkty">
+            <LinkItem href="/produkty">
               <a className="nav-link">PRODUKTY</a>
-            </Link>
-            <Link href="/uslugi">
+            </LinkItem>
+            <LinkItem href="/uslugi">
               <a className="nav-link">USŁUGI</a>
-            </Link>
-            <Link href="/blog">
+            </LinkItem>
+            <LinkItem href="/blog">
               <a className="nav-link">BLOG</a>
-            </Link>
-            <Link href="/kontakt">
+            </LinkItem>
+            <LinkItem href="/kontakt">
               <a className="nav-link">KONTAKT</a>
-            </Link>
+            </LinkItem>
           </Nav>
         </Navbar.Collapse>
       </Container>

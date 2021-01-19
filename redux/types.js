@@ -1,7 +1,10 @@
 export const UPDATE_CLIENT_ORDER = "UPDATE_CLIENT_ORDER";
+export const SUBMIT_CLIENT_ORDER = "SUBMIT_CLIENT_ORDER";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const UPDATE_POST = "UPDATE_POST";
 
 export const INIT_PRODUCT = "INIT_PRODUCT";
 export const LOADING = "LOADING";
+export const SUBMITTING = "SUBMITTING";
+export const CLEAR_STORE = "CLEAR_STORE";

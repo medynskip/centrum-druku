@@ -49,6 +49,9 @@
         }
       }
       &:not(:first-child) {
+        &.selected {
+          font-weight: 700;
+        }
         &:hover {
           border: 2px solid #64586e;
         }

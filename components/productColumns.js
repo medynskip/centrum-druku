@@ -8,20 +8,22 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { connect } from "react-redux";
-import { updateOrder } from "../redux/actions/orderActions";
+import { updateClient, clearClient } from "../redux/actions/clientActions";
 
-function ProductColumns({ product, order, updateOrder }) {
+function ProductColumns({ product, order, updateClient, clearClient }) {
   useEffect(() => {
-    updateOrder({
-      name: product.name,
-      amount: product.prices.length > 0 ? product.prices[0].amount : 0,
+    clearClient();
+    updateClient({
+      product: product.name,
+      volume: product.prices.length > 0 ? product.prices[0].amount : 0,
       duration: product.prices.length > 0 ? product.duration : 0,
       price: product.prices.length > 0 ? product.prices[0].price : 0,
+      value: product.prices.length > 0 ? product.prices[0].price : 0,
     });
   }, [product]);
 
   const sendToStore = (params) => {
-    updateOrder(params);
+    updateClient(params);
   };
 
   if (product.parameters.length < 1) return <div>Produkt niedostępny</div>;
@@ -46,11 +48,12 @@ function ProductColumns({ product, order, updateOrder }) {
 }
 
 const mapStateToProps = (state) => ({
-  order: { ...state.order },
+  order: { ...state.client },
 });
 
 const mapDispatchToProps = {
-  updateOrder: (order) => updateOrder(order),
+  updateClient: (order) => updateClient(order),
+  clearClient: () => clearClient(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductColumns);
