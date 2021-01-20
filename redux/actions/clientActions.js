@@ -1,13 +1,22 @@
 import * as t from "../types";
 
-export const updateClient = (order) => ({
-  type: t.UPDATE_CLIENT_ORDER,
-  payload: order,
-});
+export const updateClient = (order) => {
+  return (dispatch) => {
+    console.log("z akcji", order);
+    dispatch({
+      type: t.UPDATE_CLIENT_ORDER,
+      payload: order,
+    });
+  };
+};
 
-export const clearClient = () => ({
-  type: t.CLEAR_STORE,
-});
+export const clearClient = () => {
+  return (dispatch) => {
+    dispatch({
+      type: t.CLEAR_STORE,
+    });
+  };
+};
 
 export const submitClient = (order) => {
   return (dispatch) => {

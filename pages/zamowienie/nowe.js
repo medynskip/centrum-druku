@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import utils from "../../utils/utils";
 
 import Layout from "../../components/layout";
+import OrderDetails from "../../components/orderDetails";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -35,7 +36,7 @@ const ValidationErrors = (props) => {
   }
 };
 
-const Zamowienie = (props) => {
+const Zamowienie = ({ order, updateClient, submitClient }) => {
   const router = useRouter();
 
   const [errorEl, setErrorEl] = useState([]);
@@ -92,8 +93,8 @@ const Zamowienie = (props) => {
     e.preventDefault();
     const err = validation();
     if (err.length < 1) {
-      props.submitClient({
-        ...props.order,
+      submitClient({
+        ...order,
         client: { ...fields },
         comment: comment,
         payment: "Nowe",
@@ -106,6 +107,7 @@ const Zamowienie = (props) => {
       window.scrollTo(0, 100);
     }
   };
+
   return (
     <Layout title="Przyjęcie nowego zamówienia">
       <Container className="new-order-form">
@@ -200,7 +202,8 @@ const Zamowienie = (props) => {
                   />
                 </InputGroup>
               </div>
-              <div className="parameters">
+              <OrderDetails order={order} />
+              {/* <div className="parameters">
                 <h4>Wybrane parametry zamówienia</h4>
                 <Row>
                   <Col>
@@ -219,10 +222,16 @@ const Zamowienie = (props) => {
                         <span>{props.order.volume} szt.</span>
                       </li>
                       <li>
-                        <span>Cena:</span>{" "}
+                        <span>Cena :</span>{" "}
                         <span>
-                          {props.order.value.toFixed(0)}
-                          ,00 zł netto
+                          {props.order.value}
+                          .00 zł netto
+                        </span>
+                      </li>
+                      <li>
+                        <span> </span>
+                        <span>
+                          {(props.order.value * 1.23).toFixed(2)} zł brutto
                         </span>
                       </li>
                     </ul>
@@ -241,7 +250,8 @@ const Zamowienie = (props) => {
                     </ul>
                   </Col>
                 </Row>
-                {/* <Form.Group className="form-group files">
+                </div> */}
+              {/* <Form.Group className="form-group files">
                   <Form.Label>Wgraj pliki projektu</Form.Label>
                   <Form.Control
                     type="file"
@@ -251,6 +261,7 @@ const Zamowienie = (props) => {
                   />
                 </Form.Group> */}
 
+              <div className="mb-3">
                 <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>Uwagi do realizacji</InputGroup.Text>
@@ -260,11 +271,9 @@ const Zamowienie = (props) => {
                     name="comment"
                     value={comment}
                     as="textarea"
-                    placeholder="Jeśli masz specyficzne wymagania co d osposobu realizacji zamóienia, podaj je tu..."
+                    placeholder="Jeśli masz specyficzne wymagania co do sposobu realizacji zamówienia, podaj je tu..."
                   />
                 </InputGroup>
-              </div>
-              <div className="mb-3">
                 <Form.Check type="checkbox" id="check-api-checkbox">
                   <Form.Check.Input
                     onChange={handleAccepted}

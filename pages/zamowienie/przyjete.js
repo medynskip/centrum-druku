@@ -4,9 +4,12 @@ import { updateClient, submitClient } from "../../redux/actions/clientActions";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
+import Link from "next/link";
+
 import utils from "../../utils/utils";
 
 import Layout from "../../components/layout";
+import OrderDetails from "../../components/orderDetails";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -23,16 +26,66 @@ const Zamowienie = ({ order }) => {
     console.log(order);
     return (
       <Layout title="Przyjęcie nowego zamówienia">
-        <Spinner> Loading</Spinner>
+        <Spinner animation="border" />
       </Layout>
     );
   }
 
-  console.log(order);
   return (
     <Layout title="Przyjęcie nowego zamówienia">
-      <h3>Zamówienie przyjęte na {order.product}</h3>
-      <h3>Numer zamówienia to {order._id}</h3>
+      <Container>
+        <h3>Gratulacje! Zamówienie zostało przyjęte.</h3>
+        <div className="content-box">
+          <h4>Numer Twojego zamówienia to {order._id}</h4>
+          <OrderDetails order={order} />
+        </div>
+        <h3>Co dalej?</h3>
+        <Row noGutters xs={1} md={2} lg={3}>
+          <Col>
+            <Link href="/">
+              <a>
+                <div className="service-card">
+                  <img src="/images/payment.svg" /> <br />
+                  <h4>Opłać zamówienie</h4>
+                  <p>
+                    Ipsum consectetur irure eiusmod velit deserunt eiusmod enim
+                    nisi.
+                  </p>
+                </div>
+              </a>
+            </Link>
+          </Col>
+
+          <Col>
+            <Link href="/">
+              <a>
+                <div className="service-card">
+                  <img src="/images/upload.svg" /> <br />
+                  <h4>Wgraj pliki do wydruku</h4>
+                  <p>
+                    Id nostrud commodo voluptate incididunt ex elit tempor
+                    deserunt nostrud.
+                  </p>
+                </div>
+              </a>
+            </Link>
+          </Col>
+          <Col>
+            <Link href="/">
+              <a>
+                <div className="service-card">
+                  <img src="/images/configure.svg" /> <br />
+                  <h4>Sprawdź szczegóły zamówienia</h4>
+                  <p>
+                    Exercitation ex anim sint mollit proident consequat
+                    consequat ex.
+                  </p>
+                </div>
+              </a>
+            </Link>
+          </Col>
+        </Row>
+      </Container>
     </Layout>
   );
 };

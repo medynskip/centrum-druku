@@ -23,7 +23,7 @@ const Parameters = ({ parameters, sendToStore }) => {
     });
     setSelected([...x]);
     setMultiplier([...y]);
-    sendToStore({ parameters: [...x], multiplier: y.reduce((a, b) => a * b) });
+    // sendToStore({ parameters: [...x], multiplier: y.reduce((a, b) => a * b) });
   };
 
   const handleChange = (e) => {

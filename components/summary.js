@@ -1,17 +1,23 @@
-// @refresh reset
 import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 
 import Button from "react-bootstrap/Button";
 
-const Summary = ({ order }) => {
+const Summary = ({ order, sendToStore }) => {
   const history = useRouter();
 
   const handleClick = () => {
+    sendToStore({
+      ...order,
+      value: (order.price * order.multiplier).toFixed(0),
+    });
     history.push("/zamowienie/nowe");
   };
 
+  useEffect(() => {
+    console.log("effect", order);
+  }, []);
   return (
     <div className="shop-module">
       <span className="top">3</span>
@@ -21,6 +27,7 @@ const Summary = ({ order }) => {
       <p>Nakład: {order.volume} szt.</p>
       <p>Wybrane parametry:</p>
       <ul>
+        {console.log("summery", order)}
         {order.parameters.map((el, i) => {
           return (
             <li key={i}>

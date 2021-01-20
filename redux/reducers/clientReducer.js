@@ -19,7 +19,12 @@ const clientReducer = (state = { ...initialState }, action) => {
     case t.SUBMITTING:
       return { ...state, ...action.payload, submitting: true };
     case t.UPDATE_CLIENT_ORDER:
-      return { ...state, ...action.payload, submitting: false };
+      console.log("z reducera", state);
+      return {
+        ...state,
+        ...action.payload,
+        submitting: false,
+      };
     case t.SUBMIT_CLIENT_ORDER:
       return { ...state, ...action.payload, submitting: false };
     case t.CLEAR_STORE:
