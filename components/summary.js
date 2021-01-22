@@ -50,7 +50,9 @@ const Summary = ({ order, sendToStore }) => {
           {/* {(order.value * 1.23).toFixed(2)} zł brutto */}
         </span>
       </p>
-      <Button onClick={handleClick}>Zamów</Button>
+      <Button onClick={handleClick} variant="success">
+        Zamów
+      </Button>
     </div>
   );
 };

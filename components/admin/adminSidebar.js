@@ -22,6 +22,9 @@ const AdminNavbar = () => {
       <LinkItem href="/admin-panel/strony">
         <a>STRONY</a>
       </LinkItem>
+      <LinkItem href="/admin-panel/pliki">
+        <a>PLIKI</a>
+      </LinkItem>
       <LinkItem href="/admin-panel/konfiguracja">
         <a>KONFIGURACJA</a>
       </LinkItem>

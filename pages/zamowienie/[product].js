@@ -19,17 +19,30 @@ import Link from "next/link";
 import utils from "../../utils/utils";
 
 function Product({ product, allProducts }) {
+  const htmlContent = () => {
+    return { __html: product.descriptionShort };
+  };
+
   return (
     <>
       <Layout title={`${product.name} - najlepsza cena i bogate opcje wydruku`}>
         <section className="print">
           <Container>
             <Row className="shop-item-header">
-              <h2>
-                <img src={product.icon} />
-                {product.name}
-              </h2>
-              <Button variant="outline-primary">Powrót do listy</Button>
+              <div>
+                <h2>
+                  <img src={product.icon} />
+                  {product.name}
+                </h2>
+                <Link href="/produkty">
+                  <a>
+                    <Button variant="outline-primary">Powrót do listy</Button>
+                  </a>
+                </Link>
+              </div>
+              <div dangerouslySetInnerHTML={htmlContent()} />
+              {/* {product.descriptionShort}
+              </p> */}
             </Row>
 
             <ProductColumns product={product} />

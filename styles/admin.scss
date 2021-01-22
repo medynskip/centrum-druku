@@ -193,3 +193,47 @@ button {
     }
   }
 }
+
+.file-manager {
+  background-color: #fff;
+  border: 3px solid rgba(206, 206, 206, 0.14);
+
+  .current-path {
+    padding: 5px;
+    background-color: rgba(206, 206, 206, 0.14);
+    // border: 1px solid #000;
+  }
+
+  .manager-view {
+    padding: 10px;
+  }
+  // display: flex;
+  // justify-content: left;
+  .folders-group,
+  .files-group {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .file-item {
+    // display: inline-block;
+    border-radius: 5px;
+    border: 1px solid rgba(206, 206, 206, 0.24);
+    padding: 10px;
+    margin: 5px;
+    overflow: hidden;
+    width: 200px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid rgba(206, 206, 206, 0.84);
+      background-color: rgba(206, 206, 206, 0.24);
+    }
+  }
+}

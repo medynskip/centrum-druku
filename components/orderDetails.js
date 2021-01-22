@@ -13,11 +13,11 @@ import Spinner from "react-bootstrap/Spinner";
 
 const OrderDetails = ({ order }) => {
   return (
-    <div className="parameters">
+    <div className="parameters content-box">
       <h4>Wybrane parametry zamówienia</h4>
       <Row>
         <Col>
-          <p>Zamówienie:</p>
+          <h5>Zamówienie:</h5>
 
           <ul>
             <li>
@@ -44,7 +44,7 @@ const OrderDetails = ({ order }) => {
           </ul>
         </Col>
         <Col>
-          <p>Cechy:</p>
+          <h5>Cechy:</h5>
           <ul>
             {order.parameters.map((el, i) => {
               return (

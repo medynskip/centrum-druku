@@ -116,7 +116,7 @@ const Zamowienie = ({ order, updateClient, submitClient }) => {
         <Row>
           <Col>
             <Form>
-              <div className="client">
+              <div className="client content-box">
                 <h4>Dane nabywcy</h4>
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend>
@@ -285,11 +285,17 @@ const Zamowienie = ({ order, updateClient, submitClient }) => {
                   </Form.Check.Label>
                 </Form.Check>
               </div>
-              <Button onClick={handlePlaceOrder}>Wyślij do realizacji</Button>
             </Form>
           </Col>
         </Row>
-        <Button onClick={() => router.back()}>Wstecz</Button>
+        <div className="controls-spread">
+          <Button onClick={() => router.back()} variant="secondary">
+            Wstecz
+          </Button>
+          <Button onClick={handlePlaceOrder} variant="success">
+            Wyślij do realizacji
+          </Button>
+        </div>
       </Container>
     </Layout>
   );

@@ -10,6 +10,7 @@ import utils from "../../utils/utils";
 
 import Layout from "../../components/layout";
 import OrderDetails from "../../components/orderDetails";
+import ClientDetails from "../../components/ClientDetails";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -22,8 +23,10 @@ import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 
 const Zamowienie = ({ order }) => {
+  const [show, setShow] = useState(true);
+  const router = useRouter();
+
   if (order.submitting) {
-    console.log(order);
     return (
       <Layout title="Przyjęcie nowego zamówienia">
         <Spinner animation="border" />
@@ -31,13 +34,44 @@ const Zamowienie = ({ order }) => {
     );
   }
 
+  if (!order._id) {
+    // router.push("/zamowienie/wyszukaj");
+    return (
+      <Layout title="Wyszukaj zamówienie">
+        <div className="find-order">
+          <Alert variant="danger">
+            Brak zamówienia
+            <hr />
+            <div className="d-flex justify-content-end">
+              <Link href="/zamowienie/wyszukaj/">
+                <a>
+                  <Button variant="success">
+                    Wyszukaj zamówienie ponownie
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          </Alert>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout title="Przyjęcie nowego zamówienia">
       <Container>
-        <h3>Gratulacje! Zamówienie zostało przyjęte.</h3>
+        {/* <h3>Gratulacje! Zamówienie zostało przyjęte.</h3> */}
+        {show && (
+          <Alert variant="success" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>Gratulacje! </Alert.Heading>
+            Zamówienie zostało przyjęte.
+            <hr />
+            Na podany adres email wysłaliśmy potwierdzenie.
+          </Alert>
+        )}
         <div className="content-box">
-          <h4>Numer Twojego zamówienia to {order._id}</h4>
-          <OrderDetails order={order} />
+          <h4>Numer Twojego zamówienia </h4>
+          <div className="order-number">{order._id}</div>
         </div>
         <h3>Co dalej?</h3>
         <Row noGutters xs={1} md={2} lg={3}>
@@ -45,7 +79,7 @@ const Zamowienie = ({ order }) => {
             <Link href="/">
               <a>
                 <div className="service-card">
-                  <img src="/images/payment.svg" /> <br />
+                  <img src="/images/payment.svg" height="100" /> <br />
                   <h4>Opłać zamówienie</h4>
                   <p>
                     Ipsum consectetur irure eiusmod velit deserunt eiusmod enim
@@ -60,7 +94,7 @@ const Zamowienie = ({ order }) => {
             <Link href="/">
               <a>
                 <div className="service-card">
-                  <img src="/images/upload.svg" /> <br />
+                  <img src="/images/upload.svg" height="100" /> <br />
                   <h4>Wgraj pliki do wydruku</h4>
                   <p>
                     Id nostrud commodo voluptate incididunt ex elit tempor
@@ -74,7 +108,7 @@ const Zamowienie = ({ order }) => {
             <Link href="/">
               <a>
                 <div className="service-card">
-                  <img src="/images/configure.svg" /> <br />
+                  <img src="/images/configure.svg" height="100" /> <br />
                   <h4>Sprawdź szczegóły zamówienia</h4>
                   <p>
                     Exercitation ex anim sint mollit proident consequat
@@ -85,6 +119,8 @@ const Zamowienie = ({ order }) => {
             </Link>
           </Col>
         </Row>
+        <OrderDetails order={order} />
+        <ClientDetails client={order.client} />
       </Container>
     </Layout>
   );

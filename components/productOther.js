@@ -15,22 +15,32 @@ import utils from "../utils/utils";
 
 function ProductOther({ products }) {
   return (
-    <Row className="product-badges">
-      <h4>Pozostałe produkty</h4>
-      <p>
-        {products.map((product, i) => {
-          const nameSlug = utils.slugify(product.name);
-          return (
-            <Link key={i} href={`/produkty/${nameSlug}`}>
-              <a>
-                <Badge pill variant="dark">
-                  {product.name}
-                </Badge>
-              </a>
-            </Link>
-          );
-        })}
-      </p>
+    <Row>
+      <div className="product-badges content-box">
+        <h4>Pozostałe produkty</h4>
+        <div>
+          {products.map((product, i) => {
+            const nameSlug = utils.slugify(product.name);
+            return (
+              <Link key={i} href={`/produkty/${nameSlug}`}>
+                <a>
+                  {/* <Badge pill variant="secondary">
+                    {product.name}
+                  </Badge> */}
+                  <Button variant="outline-dark">
+                    <img
+                      src={product.icon}
+                      height="30"
+                      alt={`${product.name} ikona`}
+                    />{" "}
+                    {product.name}
+                  </Button>
+                </a>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </Row>
   );
 }
