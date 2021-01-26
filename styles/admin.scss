@@ -1,3 +1,9 @@
+@mixin shadow-light {
+  -webkit-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.44);
+  -moz-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.44);
+  box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.44);
+}
+
 body {
   margin-bottom: 50px;
 }
@@ -44,20 +50,18 @@ body {
 }
 
 .sidebar {
+  @include shadow-light;
   background-color: rgb(32, 184, 98);
   color: #fff;
-  // height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 220px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 150px; /* Stay at the top */
+  width: 220px;
+  position: fixed;
+  z-index: 1;
+  top: 150px;
   left: 10px;
-  overflow: hidden; /* Disable horizontal scroll */
+  overflow: hidden;
   padding: 30px 10px;
   border-radius: 5px;
-  -webkit-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.44);
-  -moz-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.44);
-  box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.44);
+
   a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
@@ -168,9 +172,8 @@ button {
 
       li {
         border: 3px solid #fff;
-        -webkit-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.14);
-        -moz-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.14);
-        box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.14);
+
+        @include shadow-light;
 
         img {
           width: 300px;
@@ -185,37 +188,31 @@ button {
   border: 3px solid rgba(206, 206, 206, 0.14);
 
   .current-path {
-    padding: 5px;
+    padding: 10px;
+    margin: 5px;
     background-color: rgba(206, 206, 206, 0.14);
   }
 
-  .manager-view {
-    padding: 10px;
-  }
+  // .manager-view {
+  // padding: 10px;
+  // }
 
   .items-group {
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
     align-items: flex-start;
-    .items-listed {
-      display: flex;
-      border-left: 1px solid rgb(214, 214, 214);
-      border-right: 1px solid rgb(214, 214, 214);
-      padding: 0px 5px;
-      margin: 0px 5px;
-      .empty-list {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 5px;
-        border: 1px solid rgba(206, 206, 206, 0.24);
-        background-color: rgba(206, 206, 206, 0.14);
-        margin: 5px;
 
-        width: 240px;
-        height: 120px;
-      }
+    .empty-list {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      border: 1px solid rgba(206, 206, 206, 0.24);
+      background-color: rgba(206, 206, 206, 0.14);
+      margin: 5px;
+      width: 240px;
+      height: 120px;
     }
   }
 

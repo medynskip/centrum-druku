@@ -35,26 +35,7 @@ const Zamowienie = ({ order }) => {
   }
 
   if (!order._id) {
-    // router.push("/zamowienie/wyszukaj");
-    return (
-      <Layout title="Wyszukaj zamówienie">
-        <div className="find-order">
-          <Alert variant="danger">
-            Brak zamówienia
-            <hr />
-            <div className="d-flex justify-content-end">
-              <Link href="/zamowienie/wyszukaj/">
-                <a>
-                  <Button variant="success">
-                    Wyszukaj zamówienie ponownie
-                  </Button>
-                </a>
-              </Link>
-            </div>
-          </Alert>
-        </div>
-      </Layout>
-    );
+    return <NoOrder />;
   }
 
   return (
@@ -119,8 +100,8 @@ const Zamowienie = ({ order }) => {
             </Link>
           </Col>
         </Row>
-        <OrderDetails order={order} />
-        <ClientDetails client={order.client} />
+        {/* <OrderDetails order={order} />
+        <ClientDetails client={order.client} /> */}
       </Container>
     </Layout>
   );

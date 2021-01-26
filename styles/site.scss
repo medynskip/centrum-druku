@@ -543,11 +543,13 @@ footer {
     }
 
     .post-img {
-      max-height: 400px;
+      height: 400px;
       overflow: hidden;
+      position: relative;
+      width: 100%;
 
       img {
-        object-fit: contain;
+        object-fit: cover;
         width: 100%;
       }
     }

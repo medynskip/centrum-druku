@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
-
-import Link from "next/link";
+import React, { useState } from "react";
 
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 import BottomBar from "./bottomBar";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import ImageSelector from "./imageSelector";
 
 const PostForm = ({ post, sendToStore }) => {
+  const [show, setShow] = useState(false);
+
   const [values, setPost] = useState({
     title: post.title,
     author: post.author,
@@ -31,20 +32,20 @@ const PostForm = ({ post, sendToStore }) => {
     });
   };
 
+  const setFilePath = (path) => {
+    setPost({
+      ...values,
+      image: path,
+      modified: true,
+    });
+  };
+
   const activate = () => {
     setActive((prev) => !prev);
     sendToStore({
       active: !active,
     });
-    //   update({ active: !active });
   };
-
-  //   const handleActive = (e) => {
-  //     setPost({
-  //       ...post,
-  //       active: e.target.checked,
-  //     });
-  //   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,50 +90,38 @@ const PostForm = ({ post, sendToStore }) => {
             required
           />
         </Form.Group>
+
         <Form.Group>
           <Form.Label>Podaj link do zdjęcia *</Form.Label>
-          <Form.Control
-            name="image"
-            onChange={handleChange}
-            placeholder="Podaj poprawny link obrazu..."
-            value={values.image}
-            required
-          />
+          <InputGroup className="mb-3">
+            <FormControl
+              name="image"
+              value={values.image}
+              placeholder="Podaj link obrazu..."
+              aria-label="Link obrazka"
+              aria-describedby="basic-addon2"
+              readOnly
+            />
+            <InputGroup.Append>
+              <Button variant="outline-secondary" onClick={() => setShow(true)}>
+                Wybierz
+              </Button>
+            </InputGroup.Append>
+          </InputGroup>
         </Form.Group>
         <Form.Group>
           <Form.Label>Treść wpisu </Form.Label>
           <ReactQuill onChange={setText} theme="snow" value={text} />
         </Form.Group>
       </Form>
+
+      <ImageSelector show={show} setShow={setShow} setFilePath={setFilePath} />
+
       <BottomBar
         exit="/admin-panel/blog"
         handleSubmit={handleSubmit}
         modified={values.modified}
       />
-
-      {/* <Navbar fixed="bottom" bg="dark" expand="lg">
-        <Container>
-          <Link href="/admin-panel/blog">
-            <a>
-              <Button variant="warning">Wyjdz</Button>
-            </a>
-          </Link>
-          <Button
-            variant={status.modified ? "success" : "primary"}
-            onClick={handleSubmit}
-            disabled={status.modified ? false : true}
-          >
-            {status.modified ? "Zapisz" : "Aktualne"}
-          </Button>
-        </Container>
-      </Navbar> */}
-
-      {/* <Link href="/admin-panel/blog/">
-        <a>
-          <Button variant="danger">Zamknij</Button>
-        </a>
-      </Link>
-      <Button onClick={handleSubmit}>Zapisz</Button> */}
     </>
   );
 };

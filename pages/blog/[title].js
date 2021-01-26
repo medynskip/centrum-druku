@@ -7,6 +7,8 @@ import Badge from "react-bootstrap/Badge";
 
 import utils from "../../utils/utils";
 
+import Image from "next/image";
+
 function Post({ post }) {
   const date = new Date(post.added);
   const displayDate = `${date.getDate()} / ${
@@ -29,7 +31,10 @@ function Post({ post }) {
                 <h2>{post.title}</h2>
                 <Badge variant="warning">{displayDate}</Badge>
                 <div className="post-img">
-                  <img src={post.image} />
+                  <Image
+                    src={`http://localhost:5001/${post.image}`}
+                    layout="fill"
+                  />
                 </div>
 
                 <div

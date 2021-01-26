@@ -2,6 +2,7 @@ import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import utils from "../utils/utils";
 
@@ -16,12 +17,14 @@ const PostCard = (props) => {
   const titleSlug = utils.slugify(props.post.title);
 
   const url = `/blog/${titleSlug}`;
-  // const url = `/blog/${props.post._id}`;
 
   return (
     <Col className="post-card">
       <div className="post-img">
-        <img src={props.post.image} />
+        <Image
+          src={`${process.env.NEXT_PUBLIC_API_LINK}/${props.post.image}`}
+          layout="fill"
+        />
       </div>
       <h2>{props.post.title}</h2>
       <Badge variant="warning">{displayDate}</Badge>
