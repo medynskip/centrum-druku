@@ -182,7 +182,9 @@ const OrderForm = ({ order, sendToStore }) => {
                 order.files.map((el, i) => {
                   return (
                     <li key={i}>
-                      <img src={`http://api.piotrmedynski.pl/public${el}`} />
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_API_LINK}/public/orders${el}`}
+                      />
                     </li>
                   );
                 })

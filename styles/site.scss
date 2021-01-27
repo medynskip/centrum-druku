@@ -739,6 +739,22 @@ footer {
   }
 }
 
+.tab-content {
+  border: 1px solid transparent;
+  border-color: #fff#dee2e6 #dee2e6;
+  margin-bottom: 40px;
+}
+
+.image-miniature {
+  // position: relative;
+  display: inline-block;
+  // width: 150px;
+  // height: 100px;
+  padding: 5px;
+  border: 1px solid #dee2e6;
+  margin: 10px;
+}
+
 @media (min-width: 600px) {
   .top-nav {
     .navbar-brand {

@@ -91,9 +91,10 @@ mark.blue {
   margin: 25px auto;
   background-color: #fff;
   border: 1px solid rgba(163, 163, 163, 0.14);
-  -webkit-box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
-  -moz-box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
-  box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
+  @include shadow-light;
+  // -webkit-box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
+  // -moz-box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
+  // box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
 
   h4 {
     position: absolute;

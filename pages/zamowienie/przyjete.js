@@ -10,7 +10,8 @@ import utils from "../../utils/utils";
 
 import Layout from "../../components/layout";
 import OrderDetails from "../../components/orderDetails";
-import ClientDetails from "../../components/ClientDetails";
+import ClientDetails from "../../components/clientDetails";
+import NoOrder from "../../components/noOrder";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -57,7 +58,7 @@ const Zamowienie = ({ order }) => {
         <h3>Co dalej?</h3>
         <Row noGutters xs={1} md={2} lg={3}>
           <Col>
-            <Link href="/">
+            <Link href="/zamowienie/szczegoly?tab=platnosc">
               <a>
                 <div className="service-card">
                   <img src="/images/payment.svg" height="100" /> <br />
@@ -72,7 +73,7 @@ const Zamowienie = ({ order }) => {
           </Col>
 
           <Col>
-            <Link href="/">
+            <Link href="/zamowienie/szczegoly?tab=pliki">
               <a>
                 <div className="service-card">
                   <img src="/images/upload.svg" height="100" /> <br />
@@ -86,7 +87,7 @@ const Zamowienie = ({ order }) => {
             </Link>
           </Col>
           <Col>
-            <Link href="/">
+            <Link href="/zamowienie/szczegoly?tab=szczegoly">
               <a>
                 <div className="service-card">
                   <img src="/images/configure.svg" height="100" /> <br />
