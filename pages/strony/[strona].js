@@ -9,8 +9,8 @@ import utils from "../../utils/utils";
 
 import Image from "next/image";
 
-function Post({ post, products, pages }) {
-  const date = new Date(post.added);
+function Post({ page, products, pages }) {
+  const date = new Date(page.added);
   const displayDate = `${date.getDate()} / ${
     date.getMonth() + 1
   } / ${date.getFullYear()} g: ${date.getHours()}:${(
@@ -18,22 +18,22 @@ function Post({ post, products, pages }) {
   ).slice(-2)}`;
 
   const htmlContent = () => {
-    return { __html: post.content };
+    return { __html: page.content };
   };
 
   return (
     <>
-      <Layout title={post.title} products={products} pages={pages}>
+      <Layout title={page.title} products={products} pages={pages}>
         <section className="blog">
           <Container>
             <Row>
               <Col className="post-card">
-                <h2>{post.title}</h2>
+                <h2>{page.title}</h2>
                 <Badge variant="warning">{displayDate}</Badge>
-                {post.image ? (
+                {page.image ? (
                   <div className="post-img">
                     <Image
-                      src={`http://localhost:5001/${post.image}`}
+                      src={`http://localhost:5001/${page.image}`}
                       layout="fill"
                     />
                   </div>
@@ -54,13 +54,13 @@ function Post({ post, products, pages }) {
 
 export async function getStaticPaths() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_LINK}/blog/get/active`
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
   );
-  const posts = await res.json();
+  const pages = await res.json();
 
-  const paths = posts.map((post) => {
-    const titleSlug = utils.slugify(post.title);
-    return `/blog/${titleSlug}`;
+  const paths = pages.map((page) => {
+    const titleSlug = utils.slugify(page.title);
+    return `/strony/${titleSlug}`;
   });
 
   return { paths, fallback: false };
@@ -77,18 +77,18 @@ export async function getStaticProps({ params }) {
   );
   const pages = await pagesQuery.json();
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_LINK}/blog/get/active`
-  );
-  const allPosts = await res.json();
-  let post;
-  allPosts.map((single) => {
+  //   const res = await fetch(
+  //     `${process.env.NEXT_PUBLIC_API_LINK}/blog/get/active`
+  //   );
+  //   const allPosts = await res.json();
+  let page;
+  pages.map((single) => {
     const titleSlug = utils.slugify(single.title);
-    if (titleSlug == params.title) {
-      post = { ...single };
+    if (titleSlug == params.strona) {
+      page = { ...single };
     }
   });
-  return { props: { post, products, pages } };
+  return { props: { page, products, pages } };
 }
 
 export default Post;

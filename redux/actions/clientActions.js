@@ -2,7 +2,6 @@ import * as t from "../types";
 
 export const updateClient = (order) => {
   return (dispatch) => {
-    console.log("z akcji", order);
     dispatch({
       type: t.UPDATE_CLIENT_ORDER,
       payload: order,
@@ -39,7 +38,4 @@ export const submitClient = (order) => {
         });
       });
   };
-
-  // type: t.SUBMIT_CLIENT_ORDER,
-  // payload: order,
 };

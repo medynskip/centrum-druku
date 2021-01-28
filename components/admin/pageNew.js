@@ -14,7 +14,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Spinner from "react-bootstrap/Spinner";
 import Navbar from "react-bootstrap/Navbar";
 
-const PostNew = ({ addPost }) => {
+const PageNew = ({ addPage }) => {
   const [name, setName] = useState("");
 
   const handleChange = (e) => {
@@ -26,8 +26,9 @@ const PostNew = ({ addPost }) => {
     if (name.length < 3) {
       alert("Tytuł musi mieć przynajmniej 3 znaki");
     } else {
-      addPost({
+      addPage({
         title: name,
+        linkName: name,
         content: "",
         author: "Admin",
         image: null,
@@ -41,8 +42,8 @@ const PostNew = ({ addPost }) => {
     <Form className="top-margin" onSubmit={handleSubmit}>
       <InputGroup className="mb-3">
         <Form.Control
-          placeholder="Podaj tytuł posta"
-          aria-label="Podaj tytuł posta"
+          placeholder="Podaj tytuł podstrony"
+          aria-label="Podaj tytuł podstrony"
           aria-describedby="basic-addon2"
           onChange={handleChange}
           value={name}
@@ -57,4 +58,4 @@ const PostNew = ({ addPost }) => {
   );
 };
 
-export default PostNew;
+export default PageNew;

@@ -22,8 +22,6 @@ function ProductColumns({ product, order, updateClient, clearClient }) {
       });
       y.push(el.fieldValues[0].multiplier);
     });
-
-    console.log("to jest use effect");
     clearClient();
     updateClient({
       product: product.name,
@@ -33,15 +31,10 @@ function ProductColumns({ product, order, updateClient, clearClient }) {
       value: order.price * order.multiplier,
       parameters: [...x],
       multiplier: y.reduce((a, b) => a * b),
-      // volume: product.prices.length > 0 ? product.volume : 0,
-      // duration: product.prices.length > 0 ? product.duration : 0,
-      // price: product.prices.length > 0 ? product.prices[0].price : 0,
-      // value: product.prices.length > 0 ? product.prices[0].price : 0,
     });
   }, []);
 
   const sendToStore = (params) => {
-    console.log("Params:", params);
     updateClient({
       ...params,
     });
@@ -51,7 +44,6 @@ function ProductColumns({ product, order, updateClient, clearClient }) {
 
   return (
     <Row noGutters xs={1} md={1} lg={3}>
-      {/* {console.log("columns", order)} */}
       <Col>
         <Parameters parameters={product.parameters} sendToStore={sendToStore} />
       </Col>

@@ -27,7 +27,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import ContentBox from "../../components/contentBox";
 
-const Szczegoly = ({ order, updateClient }) => {
+const Szczegoly = ({ order, updateClient, products, pages }) => {
   const router = useRouter();
 
   const [key, setKey] = useState(router.query.tab);
@@ -57,11 +57,11 @@ const Szczegoly = ({ order, updateClient }) => {
   };
 
   if (!order._id) {
-    return <NoOrder />;
+    return <NoOrder products={products} pages={pages} />;
   }
 
   return (
-    <Layout title="Szczegóły zamówienia">
+    <Layout title="Szczegóły zamówienia" products={products} pages={pages}>
       <Container>
         <div className="content-box">
           <h4>Numer Twojego zamówienia </h4>
@@ -137,5 +137,24 @@ const mapDispatchToProps = {
   updateClient: (order) => updateClient(order),
   submitClient: (order) => submitClient(order),
 };
+
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Szczegoly);

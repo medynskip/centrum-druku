@@ -23,24 +23,32 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 
-const Zamowienie = ({ order }) => {
+const Zamowienie = ({ order, products, pages }) => {
   const [show, setShow] = useState(true);
   const router = useRouter();
 
   if (order.submitting) {
     return (
-      <Layout title="Przyjęcie nowego zamówienia">
+      <Layout
+        title="Przyjęcie nowego zamówienia"
+        products={products}
+        pages={pages}
+      >
         <Spinner animation="border" />
       </Layout>
     );
   }
 
   if (!order._id) {
-    return <NoOrder />;
+    return <NoOrder products={products} pages={pages} />;
   }
 
   return (
-    <Layout title="Przyjęcie nowego zamówienia">
+    <Layout
+      title="Przyjęcie nowego zamówienia"
+      products={products}
+      pages={pages}
+    >
       <Container>
         {/* <h3>Gratulacje! Zamówienie zostało przyjęte.</h3> */}
         {show && (
@@ -116,5 +124,24 @@ const mapDispatchToProps = {
   updateClient: (order) => updateClient(order),
   submitClient: (order) => submitClient(order),
 };
+
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Zamowienie);

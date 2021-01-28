@@ -26,7 +26,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 
-const FindOrder = ({ order, updateClient, clea }) => {
+const FindOrder = ({ order, updateClient, clearClient, products, pages }) => {
   const router = useRouter();
   const [searching, setSearching] = useState(null);
   const [value, setValue] = useState({
@@ -63,7 +63,7 @@ const FindOrder = ({ order, updateClient, clea }) => {
   };
 
   return (
-    <Layout title="Wyszukaj zamowienie">
+    <Layout title="Wyszukaj zamowienie" products={products} pages={pages}>
       <Container>
         <div className="find-order">
           <Form>
@@ -90,8 +90,6 @@ const FindOrder = ({ order, updateClient, clea }) => {
   );
 };
 
-// export default FindOrder;
-
 const mapStateToProps = (state) => ({
   order: { ...state.client },
 });
@@ -104,21 +102,23 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-// const mapDispatchToProps = {
-//   updateClient: (order) => updateClient(order),
-//   submitClient: (order) => submitClient(order),
-//   clearClient: () => dispatch(clearClient()),
-// };
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindOrder);
-
-// const mapStateToProps = (state) => ({
-//   order: { ...state.client },
-// });
-
-// const mapDispatchToProps = {
-//   updateClient: (order) => updateClient(order),
-//   submitClient: (order) => submitClient(order),
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Zamowienie);

@@ -6,10 +6,14 @@ import Row from "react-bootstrap/Row";
 
 import services from "../data/services";
 
-export default function Home() {
+function Services({ products, pages }) {
   return (
     <>
-      <Layout title="Projektowanie graficzne, proofing, optymalizacja - Nasze Usługi - Centrum Druku Online">
+      <Layout
+        title="Projektowanie graficzne, proofing, optymalizacja - Nasze Usługi - Centrum Druku Online"
+        products={products}
+        pages={pages}
+      >
         <section className="we-offer top-section">
           <Container>
             <h3>Co możemy dla Ciebie zrobić?</h3>
@@ -34,3 +38,24 @@ export default function Home() {
     </>
   );
 }
+
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
+}
+
+export default Services;

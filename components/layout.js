@@ -3,7 +3,7 @@ import Head from "next/head";
 import Navbar from "./navbar";
 import Footer from "./footer";
 
-const Layout = ({ children, title }) => {
+const Layout = ({ children, title, pages, products }) => {
   return (
     <>
       <Head>
@@ -17,7 +17,7 @@ const Layout = ({ children, title }) => {
 
       <Navbar />
       <div className="content">{children}</div>
-      <Footer />
+      <Footer pages={pages} products={products} />
     </>
   );
 };

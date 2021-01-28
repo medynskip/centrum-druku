@@ -1,17 +1,38 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 import AdminLayout from "./../../../components/admin/adminLayout";
-import OrderRow from "./../../../components/admin/orderRow";
 
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
+import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import Navbar from "react-bootstrap/Navbar";
 
-const OrdersList = ({ orders }) => {
+import PageRow from "./../../../components/admin/pageRow";
+import PageNew from "./../../../components/admin/pageNew";
+
+const PagesList = ({ pages }) => {
   const router = useRouter();
 
-  const deleteOrder = (orderID) => {
-    fetch(`http://api.piotrmedynski.pl/order/delete/${orderID}`, {
+  const addPage = (page) => {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/page/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(page),
+    }).then(() => {
+      router.replace(router.asPath);
+    });
+  };
+
+  const deletePage = (pageID) => {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/page/delete/${pageID}`, {
       method: "DELETE",
     }).then(() => {
       router.replace(router.asPath);
@@ -23,31 +44,35 @@ const OrdersList = ({ orders }) => {
       <Container>
         <h3>Podstrony</h3>
         <ListGroup>
-          {!orders ? (
-            <Alert variant="warning">Nie ma żadnych zamówień!</Alert>
-          ) : (
-            orders.map((order) => {
-              console.log(order);
+          {pages.length > 0 ? (
+            pages.map((page) => {
               return (
-                <OrderRow
-                  key={order._id}
-                  order={order}
-                  deleteOrder={deleteOrder}
-                />
+                <PageRow key={page._id} page={page} deletePage={deletePage} />
               );
             })
+          ) : (
+            <Alert variant="warning">
+              Nie dodałeś jeszcze żadnych podstron!
+            </Alert>
           )}
         </ListGroup>
+        <PageNew addPage={addPage} />
+
+        {/* <Button variant="success" onClick={handleClick}>
+          Dodaj nowy wpis
+        </Button> */}
       </Container>
     </AdminLayout>
   );
 };
 
 export async function getServerSideProps() {
-  const res = await fetch(`http://api.piotrmedynski.pl/order/get`);
-  const orders = await res.json();
+  // Fetch data from external API
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_LINK}/page/get`);
+  const pages = await res.json();
 
-  return { props: { orders } };
+  // Pass data to the page via props
+  return { props: { pages } };
 }
 
-export default OrdersList;
+export default PagesList;

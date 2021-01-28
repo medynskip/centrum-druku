@@ -17,21 +17,31 @@ import Link from "next/link";
 
 import utils from "../../utils/utils";
 
-function Product({ product, allProducts }) {
+function Product({ product, allProducts, pages }) {
   // const [selected, setSelected] = useState({})
   const nameSlug = utils.slugify(product.name);
 
   return (
     <>
-      <Layout title={`${product.name} - druk najwyższej jakości`}>
+      <Layout
+        title={`${product.name} - druk najwyższej jakości`}
+        products={allProducts}
+        pages={pages}
+      >
         <section className="print">
           <Container>
             <Row className="shop-item-header">
-              <h2>
-                <img src={product.icon} />
-                {product.name}
-              </h2>
-              <Button variant="outline-primary">Powrót do listy</Button>
+              <div>
+                <h2>
+                  <img src={product.icon} />
+                  {product.name}
+                </h2>
+                <Link href="/produkty">
+                  <a>
+                    <Button variant="outline-primary">Powrót do listy</Button>
+                  </a>
+                </Link>
+              </div>
             </Row>
             <p>
               Pariatur aliqua velit proident quis deserunt. Culpa minim ipsum
@@ -84,7 +94,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://api.piotrmedynski.pl/product/get/active`);
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
   const allProducts = await res.json();
   let product;
   allProducts.map((single) => {
@@ -93,7 +110,7 @@ export async function getStaticProps({ params }) {
       product = { ...single };
     }
   });
-  return { props: { product, allProducts } };
+  return { props: { product, allProducts, pages } };
 }
 
 export default Product;

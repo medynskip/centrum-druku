@@ -36,7 +36,7 @@ const ValidationErrors = (props) => {
   }
 };
 
-const Zamowienie = ({ order, updateClient, submitClient }) => {
+const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
   const router = useRouter();
 
   const [errorEl, setErrorEl] = useState([]);
@@ -109,7 +109,11 @@ const Zamowienie = ({ order, updateClient, submitClient }) => {
   };
 
   return (
-    <Layout title="Przyjęcie nowego zamówienia">
+    <Layout
+      title="Przyjęcie nowego zamówienia"
+      products={products}
+      pages={pages}
+    >
       <Container className="new-order-form">
         <h3>Nowe zamówienie</h3>
         <ValidationErrors errors={errorEl} />
@@ -203,64 +207,6 @@ const Zamowienie = ({ order, updateClient, submitClient }) => {
                 </InputGroup>
               </div>
               <OrderDetails order={order} />
-              {/* <div className="parameters">
-                <h4>Wybrane parametry zamówienia</h4>
-                <Row>
-                  <Col>
-                    <p>Zamówienie:</p>
-
-                    <ul>
-                      <li>
-                        <span>Produkt:</span> <span>{props.order.product}</span>
-                      </li>
-                      <li>
-                        <span>Czas realizacji:</span>{" "}
-                        <span>{props.order.duration} dni robocze</span>
-                      </li>
-                      <li>
-                        <span>Nakład:</span>{" "}
-                        <span>{props.order.volume} szt.</span>
-                      </li>
-                      <li>
-                        <span>Cena :</span>{" "}
-                        <span>
-                          {props.order.value}
-                          .00 zł netto
-                        </span>
-                      </li>
-                      <li>
-                        <span> </span>
-                        <span>
-                          {(props.order.value * 1.23).toFixed(2)} zł brutto
-                        </span>
-                      </li>
-                    </ul>
-                  </Col>
-                  <Col>
-                    <p>Cechy:</p>
-                    <ul>
-                      {props.order.parameters.map((el, i) => {
-                        return (
-                          <li key={i}>
-                            <span>{el.name}</span>
-                            <span>{el.value}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </Col>
-                </Row>
-                </div> */}
-              {/* <Form.Group className="form-group files">
-                  <Form.Label>Wgraj pliki projektu</Form.Label>
-                  <Form.Control
-                    type="file"
-                    onChange={handleFile}
-                    className="form-control"
-                    multiple
-                  />
-                </Form.Group> */}
-
               <div className="mb-3">
                 <InputGroup>
                   <InputGroup.Prepend>
@@ -311,5 +257,24 @@ const mapDispatchToProps = (dispatch) => {
     submitClient: (order) => dispatch(submitClient(order)),
   };
 };
+
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Zamowienie);

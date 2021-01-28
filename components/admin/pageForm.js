@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -11,21 +11,26 @@ import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import ImageSelector from "./imageSelector";
 
-const PostForm = ({ post, sendToStore }) => {
+const PageForm = ({ page, sendToStore }) => {
   const [show, setShow] = useState(false);
 
-  const [values, setPost] = useState({
-    title: post.title,
-    author: post.author,
-    image: post.image,
+  const [values, setPage] = useState({
+    title: page.title,
+    linkName: page.linkName,
+    author: page.author,
+    image: page.image,
     modified: false,
   });
 
-  const [active, setActive] = useState(post.active);
-  const [text, setText] = useState(post.content);
+  const [active, setActive] = useState(page.active);
+  const [text, setText] = useState(page.content);
+
+  useEffect(() => {
+    console.log("tu", page);
+  });
 
   const handleChange = (e) => {
-    setPost({
+    setPage({
       ...values,
       [e.target.name]: e.target.value,
       modified: true,
@@ -33,14 +38,14 @@ const PostForm = ({ post, sendToStore }) => {
   };
 
   const handleQuillChange = () => {
-    setPost({
+    setPage({
       ...values,
       modified: true,
     });
   };
 
   const setFilePath = (path) => {
-    setPost({
+    setPage({
       ...values,
       image: path,
       modified: true,
@@ -61,7 +66,7 @@ const PostForm = ({ post, sendToStore }) => {
       active: active,
       content: text,
     });
-    setPost({
+    setPage({
       ...values,
       modified: false,
     });
@@ -71,14 +76,17 @@ const PostForm = ({ post, sendToStore }) => {
     <>
       <Form>
         <Button
+          className="mb-3"
           onClick={activate}
           variant={active ? "danger" : "success"}
           size="sm"
         >
           {active ? "Wyłącz wpis" : "Aktywuj wpis"}
         </Button>
-        <Form.Group>
-          <Form.Label>Tytuł wpisu *</Form.Label>
+        <InputGroup className="mb-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text>Tytuł wpisu *</InputGroup.Text>
+          </InputGroup.Prepend>
           <Form.Control
             name="title"
             onChange={handleChange}
@@ -86,7 +94,20 @@ const PostForm = ({ post, sendToStore }) => {
             value={values.title}
             required
           />
-        </Form.Group>
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text>Link *</InputGroup.Text>
+          </InputGroup.Prepend>
+          <Form.Control
+            name="linkName"
+            onChange={handleChange}
+            placeholder=""
+            value={values.linkName}
+            required
+          />
+        </InputGroup>
+
         <Form.Group>
           <Form.Label>Autor *</Form.Label>
           <Form.Control
@@ -119,18 +140,19 @@ const PostForm = ({ post, sendToStore }) => {
         <Form.Group>
           <Form.Label>Treść wpisu </Form.Label>
           <ReactQuill
-            onChange={setText}
             onFocus={handleQuillChange}
+            onChange={setText}
             theme="snow"
             value={text}
           />
+          {/* <ReactQuill onChange={setText} theme="snow" value={text} /> */}
         </Form.Group>
       </Form>
 
       <ImageSelector show={show} setShow={setShow} setFilePath={setFilePath} />
 
       <BottomBar
-        exit="/admin-panel/blog"
+        exit="/admin-panel/strony"
         handleSubmit={handleSubmit}
         modified={values.modified}
       />
@@ -138,4 +160,4 @@ const PostForm = ({ post, sendToStore }) => {
   );
 };
 
-export default PostForm;
+export default PageForm;

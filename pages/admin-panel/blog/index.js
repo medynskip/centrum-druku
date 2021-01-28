@@ -16,20 +16,6 @@ import Navbar from "react-bootstrap/Navbar";
 import PostRow from "./../../../components/admin/postRow";
 import PostNew from "./../../../components/admin/postNew";
 
-// const DeleteBtn = (props) => {
-//   const deleteThis = () => {
-//     const approve = confirm("Potwierdź usunięcie produktu");
-//     if (approve) {
-//       props.deletePost();
-//     }
-//   };
-//   return (
-//     <Button variant="danger" size="sm" onClick={deleteThis}>
-//       Delete
-//     </Button>
-//   );
-// };
-
 const PostsList = ({ posts }) => {
   const router = useRouter();
 

@@ -11,10 +11,14 @@ import Button from "react-bootstrap/Button";
 import services from "../data/services";
 import steps from "../data/steps";
 
-export default function Home() {
+function Home({ pages, products }) {
   return (
     <>
-      <Layout title="Internetowa drukarnia i agencja reklamowa">
+      <Layout
+        title="Internetowa drukarnia i agencja reklamowa"
+        pages={pages}
+        products={products}
+      >
         <header>
           <Container className="header">
             <h1>
@@ -108,3 +112,24 @@ export default function Home() {
     </>
   );
 }
+
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
+}
+
+export default Home;

@@ -6,10 +6,10 @@ import root from "./reducers/root";
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
     const nextState = {
-      ...state, // use previous state
-      ...action.payload, // apply delta from hydration
+      ...state,
+      ...action.payload,
     };
-    if (state.count.count) nextState.count.count = state.count.count; // preserve count value on client side navigation
+    if (state.count.count) nextState.count.count = state.count.count;
     return nextState;
   } else {
     return root(state, action);

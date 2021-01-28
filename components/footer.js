@@ -1,8 +1,12 @@
 import Link from "next/link";
 
+import React, { useEffect } from "react";
+
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+
+import utils from "../utils/utils";
 
 const CompanyDetails = () => {
   return (
@@ -20,12 +24,20 @@ const CompanyDetails = () => {
   );
 };
 
-const PageMap = () => {
+const PageMap = ({ pages }) => {
   return (
     <>
-      <h4>Mapa strony:</h4>
+      <h4>Ważne informacje:</h4>
       <ul>
-        <li>
+        {pages.map((el, i) => {
+          const nameSlug = utils.slugify(el.title);
+          return (
+            <li key={i}>
+              <Link href={`/strony/${nameSlug}`}>{el.linkName}</Link>
+            </li>
+          );
+        })}
+        {/* <li>
           <Link href="/">START</Link>
         </li>
         <li>
@@ -39,18 +51,26 @@ const PageMap = () => {
         </li>
         <li>
           <Link href="/">KONTAKT</Link>
-        </li>
+        </li> */}
       </ul>
     </>
   );
 };
 
-const ProductsList = () => {
+const ProductsList = ({ products }) => {
   return (
     <>
       <h4>Produkty:</h4>
       <ul>
-        <li>
+        {products.map((el, i) => {
+          const nameSlug = utils.slugify(el.name);
+          return (
+            <li key={i}>
+              <Link href={`/produkty/${nameSlug}`}>{el.name}</Link>
+            </li>
+          );
+        })}
+        {/* <li>
           <Link href="/">WIZYTÓWKI</Link>
         </li>
         <li>
@@ -67,13 +87,13 @@ const ProductsList = () => {
         </li>
         <li>
           <Link href="/">ROLL-UP</Link>
-        </li>
+        </li> */}
       </ul>
     </>
   );
 };
 
-const Footer = () => {
+const Footer = ({ pages, products }) => {
   return (
     <footer>
       <Container>
@@ -85,10 +105,10 @@ const Footer = () => {
             <CompanyDetails />
           </Col>
           <Col>
-            <PageMap />
+            <PageMap pages={pages} />
           </Col>
           <Col>
-            <ProductsList />
+            <ProductsList products={products} />
           </Col>
         </Row>
       </Container>

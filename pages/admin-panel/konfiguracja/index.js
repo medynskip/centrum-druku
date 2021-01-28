@@ -27,7 +27,6 @@ const OrdersList = ({ orders }) => {
             <Alert variant="warning">Nie ma żadnych zamówień!</Alert>
           ) : (
             orders.map((order) => {
-              console.log(order);
               return (
                 <OrderRow
                   key={order._id}

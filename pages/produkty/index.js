@@ -4,10 +4,10 @@ import ProductCard from "../../components/productCard";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 
-function Druk({ products }) {
+function Druk({ products, pages }) {
   return (
     <>
-      <Layout title="Wydruki i produkty">
+      <Layout title="Wydruki i produkty" products={products} pages={pages}>
         <section className="print top-section">
           <Container>
             <h3>Co możemy dla Ciebie wydrukować?</h3>
@@ -37,12 +37,18 @@ function Druk({ products }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch("http://api.piotrmedynski.pl/product/get");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_LINK}/product/get`);
   const products = await res.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
 
   return {
     props: {
       products,
+      pages,
     },
   };
 }

@@ -5,10 +5,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function Kontakt() {
+function Kontakt({ products, pages }) {
   return (
     <>
-      <Layout title="Skontaktuj się z nami - Centrum Druku Online">
+      <Layout
+        title="Skontaktuj się z nami - Centrum Druku Online"
+        products={products}
+        pages={pages}
+      >
         <section className="contact-us top-section">
           <Container>
             <h3>Odezwij się, porozmawiajmy!</h3>
@@ -47,6 +51,25 @@ function Kontakt() {
       </Layout>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const productsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
+  const products = await productsQuery.json();
+
+  const pagesQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/page/get/active`
+  );
+  const pages = await pagesQuery.json();
+
+  return {
+    props: {
+      products,
+      pages,
+    },
+  };
 }
 
 export default Kontakt;

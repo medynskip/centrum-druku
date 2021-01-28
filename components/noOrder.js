@@ -8,9 +8,9 @@ import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-const NoOrder = () => {
+const NoOrder = ({ products, pages }) => {
   return (
-    <Layout title="Wyszukaj zamówienie">
+    <Layout title="Wyszukaj zamówienie" products={products} pages={pages}>
       <div className="find-order">
         <Alert variant="danger">
           Brak zamówienia
