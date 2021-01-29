@@ -42,16 +42,18 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
   const [errorEl, setErrorEl] = useState([]);
   const [company, setCompany] = useState(false);
   const [accepted, setAccepted] = useState(false);
-  const [files, setFiles] = useState(null);
   const [comment, setComment] = useState("");
 
   const [fields, setFields] = useState({
     name: "",
+    firstName: "",
+    lastName: "",
     nip: "",
     street: "",
     city: "",
     postal: "",
     email: "",
+    phone: "",
   });
 
   const handleChange = (e) => {
@@ -65,10 +67,6 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
     setComment(e.target.value);
   };
 
-  const handleFile = (e) => {
-    setFiles(e.target.files);
-  };
-
   const handleCheckbox = (e) => {
     setCompany(e.target.checked);
   };
@@ -80,10 +78,13 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
   const validation = () => {
     const err = [];
     fields.name != "" ? null : err.push("Nazwa");
+    fields.firstName != "" ? null : err.push("Imię");
+    fields.lastName != "" ? null : err.push("Nazwisko");
     fields.street != "" ? null : err.push("Ulica");
     fields.city != "" ? null : err.push("Miasto");
     fields.postal != "" ? null : err.push("Kod pocztowy");
     fields.email != "" ? null : err.push("E-mail");
+    fields.phone != "" ? null : err.push("Telefon");
     accepted != false ? null : err.push("Zaakceptuj zamówienie");
 
     return [...err];
@@ -122,6 +123,32 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
             <Form>
               <div className="client content-box">
                 <h4>Dane nabywcy</h4>
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1">Imię *</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    onChange={handleChange}
+                    name="firstName"
+                    value={fields.firstName}
+                    placeholder="Imię osoby kontaktowej"
+                    required
+                  />
+                </InputGroup>
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1">
+                      Nazwisko *
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    onChange={handleChange}
+                    name="lastName"
+                    value={fields.lastName}
+                    placeholder="Nazwisko osoby kontaktowej"
+                    required
+                  />
+                </InputGroup>
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend>
                     <InputGroup.Text id="basic-addon1">
@@ -202,6 +229,20 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
                     name="email"
                     value={fields.email}
                     placeholder="Twój adres e-mail"
+                    required
+                  />
+                </InputGroup>
+                <InputGroup className="mb-3">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon1">
+                      Telefon *
+                    </InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    onChange={handleChange}
+                    name="phone"
+                    value={fields.phone}
+                    placeholder="Telefon kontaktowy"
                     required
                   />
                 </InputGroup>

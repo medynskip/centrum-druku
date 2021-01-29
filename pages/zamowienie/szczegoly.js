@@ -57,60 +57,34 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
       .then((res) => {
         updateClient(res);
       });
-
-    console.log("kilko");
-  };
-
-  const fecz = (token, query) => {
-    fetch(`https://secure.snd.payu.com/api/v2_1/orders`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(query),
-    })
-      // .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        // router.push(data.url);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const startPayment = () => {
     const query = {
-      notifyUrl: "https://your.eshop.com/notify",
+      notifyUrl: `${process.env.NEXT_PUBLIC_API_LINK}/payments/test`,
       customerIp: "127.0.0.1",
       merchantPosId: "402972",
-      description: "RTV market",
+      description: "Centrum Druku",
       currencyCode: "PLN",
-      totalAmount: "21000",
-      extOrderId: unique,
+      totalAmount: `${order.value * 123}`,
+      extOrderId: order._id,
+      continueUrl: `${process.env.NEXT_PUBLIC_SELF}/zamowienie/szczegoly?id=${order._id}&email=${order.client.email}`,
       buyer: {
-        email: "john.doe@example.com",
-        phone: "654111654",
-        firstName: "John",
-        lastName: "Doe",
+        email: order.client.email,
+        phone: order.client.phone,
+        firstName: order.client.firstName,
+        lastName: order.client.lastName,
         language: "pl",
       },
       products: [
         {
-          name: order.product,
-          unitPrice: "15000",
+          name: `${order.product} - ${order.volume} sztuk`,
+          unitPrice: `${order.value * 123}`,
           quantity: "1",
         },
       ],
     };
-    // fetch(`${process.env.NEXT_PUBLIC_API_LINK}/payment/test`)
-    //   // .then((res) => res.json)
-    //   .then((resp) => {
-    //     console.log("success", resp);
-    //   });
 
-    // fetch("http://api.piotrmedynski.pl/payment/create", {
     fetch(`${process.env.NEXT_PUBLIC_API_LINK}/payment/create`, {
       method: "post",
       headers: {
@@ -120,9 +94,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.token);
-        fecz(data.token.access_token, query);
-        // router.push(data.url);
+        router.push(data.url);
       })
       .catch((err) => {
         console.log(err);
@@ -130,6 +102,22 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
   };
 
   if (!order._id) {
+    if (router.query.id && router.query.email) {
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_LINK}/order/get/${router.query.id}/${router.query.email}`
+      )
+        .then((res) => res.json())
+        .then((resJson) => {
+          if (resJson._id) {
+            updateClient(resJson);
+            // router.push("/zamowienie/szczegoly");
+          } else {
+            console.log("email i numer id niezgodne");
+            // setSearching(resJson.msg);
+          }
+        });
+    }
+
     return <NoOrder products={products} pages={pages} />;
   }
 
@@ -154,7 +142,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
               {order.files.length > 0 ? (
                 order.files.map((el, i) => {
                   return (
-                    <div className="image-miniature">
+                    <div key={i} className="image-miniature">
                       <Image
                         // layout="fill"
                         width={150}

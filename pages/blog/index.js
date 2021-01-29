@@ -27,7 +27,9 @@ function Blog({ posts, products, pages }) {
 }
 
 export async function getStaticProps() {
-  const postsQuery = await fetch("http://api.piotrmedynski.pl/blog/get/active");
+  const postsQuery = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/blog/get/active`
+  );
   const posts = await postsQuery.json();
 
   const productsQuery = await fetch(

@@ -30,8 +30,8 @@ const FindOrder = ({ order, updateClient, clearClient, products, pages }) => {
   const router = useRouter();
   const [searching, setSearching] = useState(null);
   const [value, setValue] = useState({
-    id: null,
-    email: null,
+    id: "",
+    email: "",
   });
 
   useEffect(() => {
@@ -59,6 +59,8 @@ const FindOrder = ({ order, updateClient, clearClient, products, pages }) => {
             setSearching(resJson.msg);
           }
         });
+    } else {
+      setSearching("Wypełnij oba pola");
     }
   };
 
@@ -67,7 +69,7 @@ const FindOrder = ({ order, updateClient, clearClient, products, pages }) => {
       <Container>
         <div className="find-order">
           <Form>
-            {searching ? <Alert variant="danger">{searching}</Alert> : null}
+            {searching ? <Alert variant="primary">{searching}</Alert> : null}
             <FormControl
               onChange={handleChange}
               name="id"

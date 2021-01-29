@@ -20,7 +20,7 @@ const PostsList = ({ posts }) => {
   const router = useRouter();
 
   const addPost = (post) => {
-    fetch("http://api.piotrmedynski.pl/blog/add", {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/blog/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +32,7 @@ const PostsList = ({ posts }) => {
   };
 
   const deletePost = (postID) => {
-    fetch(`http://api.piotrmedynski.pl/blog/delete/${postID}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/blog/delete/${postID}`, {
       method: "DELETE",
     }).then(() => {
       router.replace(router.asPath);
@@ -68,7 +68,7 @@ const PostsList = ({ posts }) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`http://api.piotrmedynski.pl/blog/get`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_LINK}/blog/get`);
   const posts = await res.json();
 
   // Pass data to the page via props
