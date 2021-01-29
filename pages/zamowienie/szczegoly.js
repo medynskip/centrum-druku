@@ -61,7 +61,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
 
   const startPayment = () => {
     const query = {
-      notifyUrl: `${process.env.NEXT_PUBLIC_API_LINK}/payments/test`,
+      notifyUrl: `${process.env.NEXT_PUBLIC_API_LINK}/payment/test`,
       customerIp: "127.0.0.1",
       merchantPosId: "402972",
       description: "Centrum Druku",
