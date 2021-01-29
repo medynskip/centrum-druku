@@ -14,6 +14,11 @@ module.exports = (phase, { defaultConfig }) => {
 
 module.exports = {
   images: {
-    domains: ["localhost", "piotrmedynski.pl"],
+    domains: [
+      "localhost",
+      "api.piotrmedynski.pl",
+      "centrumdruku.online",
+      "api.centrumdruku.online",
+    ],
   },
 };

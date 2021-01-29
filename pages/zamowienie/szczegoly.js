@@ -32,6 +32,11 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
 
   const [key, setKey] = useState(router.query.tab);
   const [files, setFiles] = useState([]);
+  const [unique, setUnique] = useState("");
+
+  const handleChange = (e) => {
+    setUnique(e.target.value);
+  };
 
   const handleFile = (e) => {
     setFiles(e.target.files);
@@ -54,6 +59,74 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
       });
 
     console.log("kilko");
+  };
+
+  const fecz = (token, query) => {
+    fetch(`https://secure.snd.payu.com/api/v2_1/orders`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(query),
+    })
+      // .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        // router.push(data.url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const startPayment = () => {
+    const query = {
+      notifyUrl: "https://your.eshop.com/notify",
+      customerIp: "127.0.0.1",
+      merchantPosId: "402972",
+      description: "RTV market",
+      currencyCode: "PLN",
+      totalAmount: "21000",
+      extOrderId: unique,
+      buyer: {
+        email: "john.doe@example.com",
+        phone: "654111654",
+        firstName: "John",
+        lastName: "Doe",
+        language: "pl",
+      },
+      products: [
+        {
+          name: order.product,
+          unitPrice: "15000",
+          quantity: "1",
+        },
+      ],
+    };
+    // fetch(`${process.env.NEXT_PUBLIC_API_LINK}/payment/test`)
+    //   // .then((res) => res.json)
+    //   .then((resp) => {
+    //     console.log("success", resp);
+    //   });
+
+    // fetch("http://api.piotrmedynski.pl/payment/create", {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/payment/create`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.token);
+        fecz(data.token.access_token, query);
+        // router.push(data.url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   if (!order._id) {
@@ -120,6 +193,8 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
               Dane np data płatości, sposób płatności, kwoty
             </ContentBox>
             <ContentBox title="Opłać zamówienie">
+              <input value={unique} onChange={handleChange}></input>
+              <Button onClick={startPayment}>Opłać w systemie PayU</Button>
               Opcja płatnościi jeśli jeszcze nie opłacone
             </ContentBox>
           </Tab>
