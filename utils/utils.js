@@ -26,6 +26,7 @@ const utils = {
     ).slice(-2)}`;
     return displayDate;
   },
+
   txtPreview: function (text, length) {
     const shorthand = text.replace(/(<([^>]+)>)/gi, "");
     return shorthand.substring(0, length) + " (...)";

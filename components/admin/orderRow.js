@@ -4,13 +4,10 @@ import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 
+import utils from "./../../utils/utils";
+
 const OrderRow = ({ order, deleteOrder }) => {
-  const date = new Date(order.placed);
-  const displayDate = `${date.getDate()} / ${
-    date.getMonth() + 1
-  } / ${date.getFullYear()} g: ${date.getHours()}:${(
-    "0" + date.getMinutes()
-  ).slice(-2)}`;
+  const displayDate = utils.dateNormalize(order.placed);
 
   const deletePasser = () => {
     const approve = confirm("Potwierdź usunięcie produktu");
@@ -28,9 +25,9 @@ const OrderRow = ({ order, deleteOrder }) => {
           </h5>
           <Badge variant="warning">{order.status}</Badge>
           <Badge variant="primary">{displayDate}</Badge>
-          <Badge variant="primary">{order.value},00 zł netto</Badge>
+          <Badge variant="primary">{order.value}.00 zł netto</Badge>
           <Badge variant="primary">{order.volume} szt.</Badge>
-          <Badge variant="success">
+          <Badge variant={order.files.length > 0 ? "success" : "secondary"}>
             {order.files.length > 0 ? "PLIKI" : "BEZ PLIKÓW"}
           </Badge>
         </div>

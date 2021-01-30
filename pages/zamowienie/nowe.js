@@ -41,8 +41,6 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
 
   const [errorEl, setErrorEl] = useState([]);
   const [company, setCompany] = useState(false);
-  const [accepted, setAccepted] = useState(false);
-  // const [comment, setComment] = useState("");
 
   const [fields, setFields] = useState({
     name: "",
@@ -63,16 +61,8 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
     });
   };
 
-  // const handleComment = (e) => {
-  //   setComment(e.target.value);
-  // };
-
   const handleCheckbox = (e) => {
     setCompany(e.target.checked);
-  };
-
-  const handleAccepted = (e) => {
-    setAccepted(e.target.checked);
   };
 
   const validation = () => {
@@ -85,7 +75,6 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
     fields.postal != "" ? null : err.push("Kod pocztowy");
     fields.email != "" ? null : err.push("E-mail");
     fields.phone != "" ? null : err.push("Telefon");
-    accepted != false ? null : err.push("Zaakceptuj zamówienie");
 
     return [...err];
   };
@@ -97,8 +86,7 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
       submitClient({
         ...order,
         client: { ...fields },
-        // comment: comment,
-        payment: "Nowe",
+        payment: "NEW",
         status: "Nowe",
         placed: Date.now(),
         history: [
@@ -162,9 +150,9 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
                   />
                 </InputGroup>
                 <Form.Text className="text-muted">
-                  Zaznacz tylko jeśli zakup dokonywany jest na firmę, i chcesz
+                  Zaznacz tylko jeśli zakup dokonywany jest na firmę i chcesz
                   otrzymać fakturę VAT. W przeciwnym razie do zamówienia
-                  wystawiony zostanie paragon fiskalny .
+                  wystawiony zostanie paragon fiskalny.
                 </Form.Text>
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend>
@@ -246,30 +234,6 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
                 </InputGroup>
               </div>
               <OrderDetails order={order} />
-              <div className="mb-3">
-                {/* <InputGroup>
-                  <InputGroup.Prepend>
-                    <InputGroup.Text>Uwagi do realizacji</InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={handleComment}
-                    name="comment"
-                    value={comment}
-                    as="textarea"
-                    placeholder="Jeśli masz specyficzne wymagania co do sposobu realizacji zamówienia, podaj je tu..."
-                  />
-                </InputGroup> */}
-                <Form.Check type="checkbox" id="check-api-checkbox">
-                  <Form.Check.Input
-                    onChange={handleAccepted}
-                    type="checkbox"
-                    required
-                  />
-                  <Form.Check.Label>
-                    Akceptuję zamówienie z obowiązkiem zapłaty
-                  </Form.Check.Label>
-                </Form.Check>
-              </div>
             </Form>
           </Col>
         </Row>
@@ -278,7 +242,7 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
             Wstecz
           </Button>
           <Button onClick={handlePlaceOrder} variant="success">
-            Wyślij do realizacji
+            Złóż zamówienie
           </Button>
         </div>
       </Container>

@@ -57,6 +57,7 @@ const OrderForm = ({ order, sendToStore }) => {
                 <option>W realizacji</option>
                 <option>Do odbioru</option>
                 <option>Zamknięte</option>
+                <option>Anulowane</option>
               </Form.Control>
             </Form.Group>
           </Col>
@@ -70,8 +71,10 @@ const OrderForm = ({ order, sendToStore }) => {
                 as="select"
                 value={status.payment}
               >
-                <option>Nowe</option>
-                <option>Opłacone</option>
+                <option value="NEW">Niezdefiniowana</option>
+                <option value="PENDING">Oczekująca</option>
+                <option value="CANCELED">Anulowana</option>
+                <option value="COMPLETED">Opłacone</option>
               </Form.Control>
             </Form.Group>
           </Col>

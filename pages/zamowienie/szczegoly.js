@@ -4,7 +4,6 @@ import { updateClient, submitClient } from "../../redux/actions/clientActions";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-import Link from "next/link";
 import Image from "next/image";
 
 import utils from "../../utils/utils";
@@ -15,33 +14,44 @@ import OrderDetails from "../../components/orderDetails";
 import NoOrder from "../../components/noOrder";
 
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Spinner from "react-bootstrap/Spinner";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
 import ContentBox from "../../components/contentBox";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFileImage,
+  faFileInvoice,
+  faMoneyBillAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Szczegoly = ({ order, updateClient, products, pages }) => {
   const router = useRouter();
 
   const [key, setKey] = useState(router.query.tab);
   const [files, setFiles] = useState([]);
-  const [unique, setUnique] = useState("");
-
-  const handleChange = (e) => {
-    setUnique(e.target.value);
-  };
 
   const handleFile = (e) => {
     setFiles(e.target.files);
     console.log(files);
+  };
+
+  const paymentTranslate = () => {
+    switch (order.payment) {
+      case "NEW":
+        return "Niezdefiniowana";
+      case "PENDING":
+        return "Oczekująca";
+      case "CANCELED":
+        return "Anulowana";
+      case "COMPLETED":
+        return "Opłacone";
+    }
   };
 
   const handleSubmit = () => {
@@ -123,16 +133,55 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
   return (
     <Layout title="Szczegóły zamówienia" products={products} pages={pages}>
       <Container>
-        <div className="content-box">
-          <h4>Numer Twojego zamówienia </h4>
-          <div className="order-number">{order._id}</div>
-        </div>
-        <Tabs
-          id="controlled-tab-example"
-          activeKey={key}
-          onSelect={(k) => setKey(k)}
-        >
-          <Tab eventKey="szczegoly" title="Szczegóły">
+        <Row>
+          <Col md={12} lg={6}>
+            <ContentBox title="Numer zamówienia">
+              <div className="order-number">{order._id}</div>
+            </ContentBox>
+          </Col>
+          <Col md={12} lg={6}>
+            <ContentBox title="Dostępne akcje">
+              <Button variant="primary">Odśwież</Button>
+              <Button variant="danger">Anuluj zamówienie</Button>
+            </ContentBox>
+          </Col>
+        </Row>
+        <Tabs id="order-tabs" activeKey={key} onSelect={(k) => setKey(k)}>
+          <Tab
+            eventKey="szczegoly"
+            title={
+              <span>
+                <FontAwesomeIcon icon={faFileInvoice} />
+                Szczegóły
+              </span>
+            }
+          >
+            <Row>
+              <Col md={12} lg={4}>
+                <ContentBox title="Status zamówienia">
+                  <div className="main-order-details">
+                    <strong>Zamówienie:</strong>
+                    {order.status}
+                  </div>
+                  <div className="main-order-details">
+                    <strong>Płatność:</strong>
+                    {paymentTranslate(order.payment)}
+                  </div>
+                </ContentBox>
+              </Col>
+              <Col md={12} lg={8}>
+                <ContentBox title="Terminy">
+                  <div className="main-order-details">
+                    <strong>Zamówione złożone:</strong>{" "}
+                    {utils.dateNormalize(order.placed)}
+                  </div>
+                  <div className="main-order-details">
+                    <strong>Przewidywany termin realizacji:</strong>{" "}
+                    {order.duration} dni robocze
+                  </div>
+                </ContentBox>
+              </Col>
+            </Row>
             <OrderDetails order={order} />
             <ClientDetails client={order.client} />
             <ContentBox title="Komentarze i historia">
@@ -143,14 +192,22 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
                       <Badge variant="primary">
                         {utils.dateNormalize(el.date)}
                       </Badge>{" "}
-                      <span>{el.comment}</span>)
+                      <span>{el.comment}</span>
                     </li>
                   );
                 })}
               </ul>
             </ContentBox>
           </Tab>
-          <Tab eventKey="pliki" title="Pliki">
+          <Tab
+            eventKey="pliki"
+            title={
+              <span>
+                <FontAwesomeIcon icon={faFileImage} />
+                Pliki
+              </span>
+            }
+          >
             <ContentBox title="Pliki do zamówienia">
               {order.files.length > 0 ? (
                 order.files.map((el, i) => {
@@ -167,7 +224,10 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
                   );
                 })
               ) : (
-                <div>nie ma plikow</div>
+                <div>
+                  Brak plików. Wgraj pliki do wydruku korzystając z poniższego
+                  formularza.
+                </div>
               )}
             </ContentBox>
             <ContentBox title="Wgraj pliki">
@@ -189,14 +249,20 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
               </Form>
             </ContentBox>
           </Tab>
-          <Tab eventKey="platnosc" title="Płatność">
+          <Tab
+            eventKey="platnosc"
+            title={
+              <span>
+                <FontAwesomeIcon icon={faMoneyBillAlt} />
+                Płatność
+              </span>
+            }
+          >
             <ContentBox title="Szczegóły płatności">
               Dane np data płatości, sposób płatności, kwoty
             </ContentBox>
             <ContentBox title="Opłać zamówienie">
-              <input value={unique} onChange={handleChange}></input>
               <Button onClick={startPayment}>Opłać w systemie PayU</Button>
-              Opcja płatnościi jeśli jeszcze nie opłacone
             </ContentBox>
           </Tab>
         </Tabs>

@@ -66,12 +66,13 @@ function Product({ product, allProducts, pages }) {
               reprehenderit non. Ipsum tempor eiusmod deserunt laboris amet
               velit in incididunt officia quis.
             </p>
-
-            <Link href={`/zamowienie/${nameSlug}`}>
-              <a>
-                <Button>Zamów {product.name}</Button>
-              </a>
-            </Link>
+            <div className="go-to-order">
+              <Link href={`/zamowienie/${nameSlug}`}>
+                <a>
+                  <Button>Zamów {product.name}</Button>
+                </a>
+              </Link>
+            </div>
 
             <ProductOther products={allProducts} />
           </Container>
