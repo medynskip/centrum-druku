@@ -7,13 +7,17 @@ import Image from "next/image";
 import utils from "../utils/utils";
 
 const PostCard = (props) => {
-  const shorthand = props.post.content.replace(/(<([^>]+)>)/gi, "");
-  const date = new Date(props.post.added);
-  const displayDate = `${date.getDate()} / ${
-    date.getMonth() + 1
-  } / ${date.getFullYear()} g: ${date.getHours()}:${(
-    "0" + date.getMinutes()
-  ).slice(-2)}`;
+  const displayDate = utils.dateNormalize(props.post.added);
+  const preview = utils.txtPreview(props.post.content, 400);
+
+  // const shorthand = props.post.content.replace(/(<([^>]+)>)/gi, "");
+  // const date = new Date(props.post.added);
+  // const displayDate = `${date.getDate()} / ${
+  //   date.getMonth() + 1
+  // } / ${date.getFullYear()} g: ${date.getHours()}:${(
+  //   "0" + date.getMinutes()
+  // ).slice(-2)}`;
+
   const titleSlug = utils.slugify(props.post.title);
 
   const url = `/blog/${titleSlug}`;
@@ -28,7 +32,10 @@ const PostCard = (props) => {
       </div>
       <h2>{props.post.title}</h2>
       <Badge variant="warning">{displayDate}</Badge>
-      <p>{shorthand.substring(0, 400) + " (...)"}</p>
+      <p>
+        {preview}
+        {/* shorthand.substring(0, 400) + " (...)" */}
+      </p>
       <Link className="black-link" href={url}>
         <a>Czytaj dalej...</a>
       </Link>

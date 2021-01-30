@@ -10,8 +10,10 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Navbar from "react-bootstrap/Navbar";
 
+import utils from "./../../utils/utils";
+
 const PostRow = ({ post, deletePost }) => {
-  const date = new Date(post.added);
+  const date = utils.dateNormalize(post.added);
 
   const deletePasser = () => {
     const approve = confirm("Potwierdź usunięcie produktu");
@@ -29,10 +31,7 @@ const PostRow = ({ post, deletePost }) => {
             {" "}
             {post.active ? "aktywny" : "nieaktywny"}
           </Badge>
-          <Badge variant="primary">
-            {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} g:{" "}
-            {date.getHours()}:{date.getMinutes()}
-          </Badge>
+          <Badge variant="primary">{date}</Badge>
         </div>
         <div>
           <Link href={`/admin-panel/blog/${post._id}`}>

@@ -5,9 +5,12 @@ import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 
 const ProductRow = ({ product, deleteProduct }) => {
-  // const deleteProduct = () => {
-
-  // }
+  const deletePasser = () => {
+    const approve = confirm("Potwierdź usunięcie produktu");
+    if (approve) {
+      deleteProduct(product._id);
+    }
+  };
 
   return (
     <ListGroup.Item>
@@ -37,13 +40,7 @@ const ProductRow = ({ product, deleteProduct }) => {
               </Button>
             </a>
           </Link>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={() => {
-              deleteProduct(product._id);
-            }}
-          >
+          <Button variant="danger" size="sm" onClick={deletePasser}>
             Delete
           </Button>
           {/* <DeleteBtn id={product._id} deleteOne={deleteOne} /> */}

@@ -42,7 +42,7 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
   const [errorEl, setErrorEl] = useState([]);
   const [company, setCompany] = useState(false);
   const [accepted, setAccepted] = useState(false);
-  const [comment, setComment] = useState("");
+  // const [comment, setComment] = useState("");
 
   const [fields, setFields] = useState({
     name: "",
@@ -63,9 +63,9 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
     });
   };
 
-  const handleComment = (e) => {
-    setComment(e.target.value);
-  };
+  // const handleComment = (e) => {
+  //   setComment(e.target.value);
+  // };
 
   const handleCheckbox = (e) => {
     setCompany(e.target.checked);
@@ -97,10 +97,13 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
       submitClient({
         ...order,
         client: { ...fields },
-        comment: comment,
+        // comment: comment,
         payment: "Nowe",
         status: "Nowe",
         placed: Date.now(),
+        history: [
+          { date: Date.now(), comment: "Zamówienie przyjęte w systemie" },
+        ],
       });
       router.push("/zamowienie/przyjete");
     } else {
@@ -125,27 +128,22 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
                 <h4>Dane nabywcy</h4>
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">Imię *</InputGroup.Text>
+                    <InputGroup.Text id="basic-addon1">
+                      Osoba do kontaktu *
+                    </InputGroup.Text>
                   </InputGroup.Prepend>
                   <FormControl
                     onChange={handleChange}
                     name="firstName"
                     value={fields.firstName}
-                    placeholder="Imię osoby kontaktowej"
+                    placeholder="Imię"
                     required
                   />
-                </InputGroup>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Text id="basic-addon1">
-                      Nazwisko *
-                    </InputGroup.Text>
-                  </InputGroup.Prepend>
                   <FormControl
                     onChange={handleChange}
                     name="lastName"
                     value={fields.lastName}
-                    placeholder="Nazwisko osoby kontaktowej"
+                    placeholder="Nazwisko"
                     required
                   />
                 </InputGroup>
@@ -249,7 +247,7 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
               </div>
               <OrderDetails order={order} />
               <div className="mb-3">
-                <InputGroup>
+                {/* <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>Uwagi do realizacji</InputGroup.Text>
                   </InputGroup.Prepend>
@@ -260,7 +258,7 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
                     as="textarea"
                     placeholder="Jeśli masz specyficzne wymagania co do sposobu realizacji zamówienia, podaj je tu..."
                   />
-                </InputGroup>
+                </InputGroup> */}
                 <Form.Check type="checkbox" id="check-api-checkbox">
                   <Form.Check.Input
                     onChange={handleAccepted}

@@ -50,7 +50,10 @@ const ManagerController = ({ handleSelected }) => {
 
   return (
     <div className="file-manager">
-      <div className="current-path">{state.currentPath}</div>
+      <div className="current-path">
+        <span>Folder: </span>
+        {state.currentPath}
+      </div>
       <ManagerFrame
         setLog={setLog}
         data={data}

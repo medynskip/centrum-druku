@@ -6,7 +6,7 @@ import AdminLayout from "./../../../components/admin/adminLayout";
 import ManagerController from "../../../components/admin/managerController";
 
 const FileManager = () => {
-  const [selected, setSelected] = useState("none");
+  const [selected, setSelected] = useState("");
 
   const handleSelected = (item) => {
     setSelected(item);
@@ -19,7 +19,10 @@ const FileManager = () => {
 
         <ManagerController handleSelected={handleSelected} />
 
-        <div className="selected-file">{selected}</div>
+        <div className="selected-file">
+          <span>Ścieżka pliku:</span>{" "}
+          {selected == "" ? "Nie zaznaczono" : selected}
+        </div>
       </Container>
     </AdminLayout>
   );

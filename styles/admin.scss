@@ -183,6 +183,15 @@ button {
     }
   }
 }
+.selected-file {
+  padding: 5px;
+
+  background-color: rgba(206, 206, 206, 0.14);
+  border: 3px solid rgba(206, 206, 206, 0.14);
+  span {
+    font-weight: 700;
+  }
+}
 
 .file-manager {
   background-color: #fff;
@@ -192,11 +201,10 @@ button {
     padding: 10px;
     margin: 5px;
     background-color: rgba(206, 206, 206, 0.14);
+    span {
+      font-weight: 700;
+    }
   }
-
-  // .manager-view {
-  // padding: 10px;
-  // }
 
   .items-group {
     display: flex;

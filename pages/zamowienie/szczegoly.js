@@ -25,6 +25,7 @@ import FormControl from "react-bootstrap/FormControl";
 import Spinner from "react-bootstrap/Spinner";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import Badge from "react-bootstrap/Badge";
 import ContentBox from "../../components/contentBox";
 
 const Szczegoly = ({ order, updateClient, products, pages }) => {
@@ -110,10 +111,8 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
         .then((resJson) => {
           if (resJson._id) {
             updateClient(resJson);
-            // router.push("/zamowienie/szczegoly");
           } else {
             console.log("email i numer id niezgodne");
-            // setSearching(resJson.msg);
           }
         });
     }
@@ -136,6 +135,20 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
           <Tab eventKey="szczegoly" title="Szczegóły">
             <OrderDetails order={order} />
             <ClientDetails client={order.client} />
+            <ContentBox title="Komentarze i historia">
+              <ul>
+                {order.history.map((el, i) => {
+                  return (
+                    <li key={i}>
+                      <Badge variant="primary">
+                        {utils.dateNormalize(el.date)}
+                      </Badge>{" "}
+                      <span>{el.comment}</span>)
+                    </li>
+                  );
+                })}
+              </ul>
+            </ContentBox>
           </Tab>
           <Tab eventKey="pliki" title="Pliki">
             <ContentBox title="Pliki do zamówienia">

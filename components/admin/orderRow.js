@@ -13,7 +13,10 @@ const OrderRow = ({ order, deleteOrder }) => {
   ).slice(-2)}`;
 
   const deletePasser = () => {
-    deleteOrder(order._id);
+    const approve = confirm("Potwierdź usunięcie produktu");
+    if (approve) {
+      deleteOrder(order._id);
+    }
   };
 
   return (

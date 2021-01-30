@@ -23,7 +23,7 @@ export const submitClient = (order) => {
       type: t.SUBMITTING,
     });
 
-    fetch("http://api.piotrmedynski.pl/order/add", {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
