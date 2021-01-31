@@ -1,5 +1,10 @@
 ## INFO
-Website for a small internet based print house. Allows for clients to place orders, pay for ordered products, check order status. Admin panel allows to manage available products, orders, blog posts, info pages and file directory.
+Responsive website of a small print house business. Allows clients to place orders for print services with file attachements. Admin panel is available, allowing to add and configure offered services, managing placed orders and maging blog module on the site (adding and deleting blog posts)
+
+Site is connecting to a database through a dedicated API, created for this project. Repository of the API (written in Node and Express) vailable here: https://github.com/medynskip/CENTRUM_DRUKU_API
+
+## DEMO
+Live preview of the site: https://druk.piotrmedynski.pl/ 
 
 ## FIRST STEPS
 First install dependencies with:
