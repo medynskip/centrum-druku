@@ -14,7 +14,7 @@ const options = {
         password: { type: "password" },
       },
       authorize: async (credentials) => {
-        const user = { id: 1, name: "Admin", password: "1klarnet1" };
+        const user = { id: 1, name: "Admin", password: "admin123" };
 
         if (
           user.name == credentials.username &&
