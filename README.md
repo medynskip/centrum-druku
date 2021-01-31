@@ -4,7 +4,7 @@ Responsive website of a small print house business. Allows clients to place orde
 Site is connecting to a database through a dedicated API, created for this project. Repository of the API (written in Node and Express) vailable here: https://github.com/medynskip/CENTRUM_DRUKU_API
 
 ## DEMO
-Live preview of the site: https://druk.piotrmedynski.pl/ 
+Live preview of the site: http://druk.piotrmedynski.pl/ 
 
 ## FIRST STEPS
 First install dependencies with:
