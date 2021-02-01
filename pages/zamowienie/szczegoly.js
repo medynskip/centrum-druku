@@ -9,8 +9,6 @@ import Image from "next/image";
 import utils from "../../utils/utils";
 
 import Layout from "../../components/layout";
-import ClientDetails from "../../components/clientDetails";
-import OrderDetails from "../../components/orderDetails";
 import NoOrder from "../../components/noOrder";
 
 import Container from "react-bootstrap/Container";
@@ -21,7 +19,11 @@ import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
+
 import ContentBox from "../../components/contentBox";
+import TabDetails from "../../components/tabDetails";
+import TabPayment from "../../components/tabPayment";
+import TabFiles from "../../components/tabFiles";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,102 +34,35 @@ import {
 
 const Szczegoly = ({ order, updateClient, products, pages }) => {
   const router = useRouter();
-
   const [key, setKey] = useState(router.query.tab);
-  const [files, setFiles] = useState([]);
 
-  const handleFile = (e) => {
-    setFiles(e.target.files);
-    console.log(files);
-  };
-
-  const paymentTranslate = () => {
-    switch (order.payment) {
-      case "NEW":
-        return "Niezdefiniowana";
-      case "PENDING":
-        return "Oczekująca";
-      case "CANCELED":
-        return "Anulowana";
-      case "COMPLETED":
-        return "Opłacone";
-    }
-  };
-
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append("order", order._id);
-    for (var x = 0; x < files.length; x++) {
-      formData.append("file", files[x]);
-    }
-    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/update/files`, {
-      method: "post",
-      body: formData,
-    })
+  const getOrderdata = (id, email) => {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/get/${id}/${email}`)
       .then((res) => res.json())
-      .then((res) => {
-        updateClient(res);
+      .then((resJson) => {
+        if (resJson._id) {
+          console.log("zaktualizowano");
+          updateClient(resJson);
+        } else {
+          console.log("email i numer id niezgodne");
+        }
       });
   };
 
-  const startPayment = () => {
-    const query = {
-      notifyUrl: `${process.env.NEXT_PUBLIC_API_LINK}/payment/test`,
-      customerIp: "127.0.0.1",
-      merchantPosId: "402972",
-      description: "Centrum Druku",
-      currencyCode: "PLN",
-      totalAmount: `${order.value * 123}`,
-      extOrderId: order._id,
-      continueUrl: `${process.env.NEXT_PUBLIC_SELF}/zamowienie/szczegoly?id=${order._id}&email=${order.client.email}`,
-      buyer: {
-        email: order.client.email,
-        phone: order.client.phone,
-        firstName: order.client.firstName,
-        lastName: order.client.lastName,
-        language: "pl",
-      },
-      products: [
-        {
-          name: `${order.product} - ${order.volume} sztuk`,
-          unitPrice: `${order.value * 123}`,
-          quantity: "1",
-        },
-      ],
-    };
+  const refresh = () => {
+    getOrderdata(order._id, order.client.email);
+  };
 
-    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/payment/create`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(query),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        router.push(data.url);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const cancel = () => {
+    console.log("canceled");
   };
 
   if (!order._id) {
     if (router.query.id && router.query.email) {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_LINK}/order/get/${router.query.id}/${router.query.email}`
-      )
-        .then((res) => res.json())
-        .then((resJson) => {
-          if (resJson._id) {
-            updateClient(resJson);
-          } else {
-            console.log("email i numer id niezgodne");
-          }
-        });
+      getOrderdata(router.query.id, router.query.email);
+    } else {
+      return <NoOrder products={products} pages={pages} />;
     }
-
-    return <NoOrder products={products} pages={pages} />;
   }
 
   return (
@@ -141,8 +76,12 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
           </Col>
           <Col md={12} lg={6}>
             <ContentBox title="Dostępne akcje">
-              <Button variant="primary">Odśwież</Button>
-              <Button variant="danger">Anuluj zamówienie</Button>
+              <Button onClick={refresh} variant="primary">
+                Odśwież
+              </Button>
+              <Button onClick={cancel} variant="danger">
+                Anuluj zamówienie
+              </Button>
             </ContentBox>
           </Col>
         </Row>
@@ -156,48 +95,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
               </span>
             }
           >
-            <Row>
-              <Col md={12} lg={4}>
-                <ContentBox title="Status zamówienia">
-                  <div className="main-order-details">
-                    <strong>Zamówienie:</strong>
-                    {order.status}
-                  </div>
-                  <div className="main-order-details">
-                    <strong>Płatność:</strong>
-                    {paymentTranslate(order.payment)}
-                  </div>
-                </ContentBox>
-              </Col>
-              <Col md={12} lg={8}>
-                <ContentBox title="Terminy">
-                  <div className="main-order-details">
-                    <strong>Zamówione złożone:</strong>{" "}
-                    {utils.dateNormalize(order.placed)}
-                  </div>
-                  <div className="main-order-details">
-                    <strong>Przewidywany termin realizacji:</strong>{" "}
-                    {order.duration} dni robocze
-                  </div>
-                </ContentBox>
-              </Col>
-            </Row>
-            <OrderDetails order={order} />
-            <ClientDetails client={order.client} />
-            <ContentBox title="Komentarze i historia">
-              <ul>
-                {order.history.map((el, i) => {
-                  return (
-                    <li key={i}>
-                      <Badge variant="primary">
-                        {utils.dateNormalize(el.date)}
-                      </Badge>{" "}
-                      <span>{el.comment}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </ContentBox>
+            <TabDetails order={order} />
           </Tab>
           <Tab
             eventKey="pliki"
@@ -208,46 +106,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
               </span>
             }
           >
-            <ContentBox title="Pliki do zamówienia">
-              {order.files.length > 0 ? (
-                order.files.map((el, i) => {
-                  return (
-                    <div key={i} className="image-miniature">
-                      <Image
-                        // layout="fill"
-                        width={150}
-                        height={100}
-                        key={i}
-                        src={`${process.env.NEXT_PUBLIC_API_LINK}/public/orders${el}`}
-                      />
-                    </div>
-                  );
-                })
-              ) : (
-                <div>
-                  Brak plików. Wgraj pliki do wydruku korzystając z poniższego
-                  formularza.
-                </div>
-              )}
-            </ContentBox>
-            <ContentBox title="Wgraj pliki">
-              <Form>
-                <Form.Group className="form-group files">
-                  <Form.Control
-                    type="file"
-                    onChange={handleFile}
-                    className="form-control"
-                    multiple
-                  />
-                </Form.Group>
-                <Button
-                  onClick={handleSubmit}
-                  disabled={files.length > 0 ? false : true}
-                >
-                  Wyślij pliki
-                </Button>
-              </Form>
-            </ContentBox>
+            <TabFiles order={order} updateClient={updateClient} />
           </Tab>
           <Tab
             eventKey="platnosc"
@@ -258,12 +117,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
               </span>
             }
           >
-            <ContentBox title="Szczegóły płatności">
-              Dane np data płatości, sposób płatności, kwoty
-            </ContentBox>
-            <ContentBox title="Opłać zamówienie">
-              <Button onClick={startPayment}>Opłać w systemie PayU</Button>
-            </ContentBox>
+            <TabPayment order={order} />
           </Tab>
         </Tabs>
       </Container>
