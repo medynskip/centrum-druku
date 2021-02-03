@@ -1,9 +1,10 @@
+@import "globals.scss";
+@import "admin.scss";
+
 .top-nav {
   background-color: #fff;
   height: 80px;
-  -webkit-box-shadow: 1px 2px 3px 2px rgba(163, 163, 163, 0.14);
-  -moz-box-shadow: 1px 2px 3px 2px rgba(163, 163, 163, 0.14);
-  box-shadow: 1px 2px 3px 2px rgba(163, 163, 163, 0.14);
+  @include shadow-light(0.14);
 
   .navbar-brand {
     width: 200px;
@@ -13,15 +14,21 @@
     }
   }
 
-  .navbar-collapse {
-    // background-color: rgba(255, 255, 255, 0.95);
-    padding: 10px;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 
-    &.show {
-      border: 1px solid rgb(219, 219, 219);
-    }
+  .navbar-collapse {
+    padding: 10px;
+    background-color: rgba(250, 250, 250, 0.92);
+    border: 1px solid rgb(219, 219, 219);
+
+    // &.show {
+    // }
 
     a {
+      @include flex-center;
       font-size: 1.2rem;
       font-weight: 400;
       margin: 5px;
@@ -29,14 +36,12 @@
       border-radius: 4px;
       padding: 10px;
       transition: 0.3s;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
 
       &:hover {
-        -webkit-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.24);
-        -moz-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.24);
-        box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.24);
+        @include shadow-light(0.24);
       }
 
       &:first-child {
@@ -79,11 +84,8 @@ header {
 }
 
 .header {
+  @include flex-center-column;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
 
   h1,
@@ -97,9 +99,6 @@ header {
   }
 
   .catchphrase {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     font-size: 2rem;
     line-height: 1.4rem;
     font-weight: bold;
@@ -107,7 +106,6 @@ header {
 
   .action-invite {
     display: inline-block;
-    // display: none;
     font-size: 2rem;
   }
 
@@ -128,18 +126,10 @@ header {
     border: 1px solid rgba(163, 163, 163, 0.14);
     transition: 0.3s;
     background-color: #fff;
-    -webkit-box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
-    -moz-box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
-    box-shadow: 1px 1px 5px 4px rgba(163, 163, 163, 0.14);
-
-    // img {
-    //   height: 190px;
-    // }
+    @include shadow-light(0.14);
 
     &:hover {
-      -webkit-box-shadow: 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-      -moz-box-shadow: 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-      box-shadow: 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
+      @include shadow-light(0.34);
     }
   }
 }
@@ -167,9 +157,7 @@ header {
     }
 
     span:first-child {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       width: 40px;
       height: 40px;
       font-size: 1.4rem;
@@ -182,7 +170,6 @@ header {
       width: 70px;
       height: 150px;
       position: absolute;
-
       top: 64px;
       background-size: contain;
       background-repeat: no-repeat;
@@ -317,10 +304,7 @@ footer {
   }
 
   .product-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    @include flex-center-column;
     border-radius: 5px;
     border: 1px solid rgb(226, 226, 226);
     background-color: #fff;
@@ -337,6 +321,7 @@ footer {
       left: 0;
       width: 100%;
       height: 50px;
+
       display: flex;
       justify-content: center;
       transition: 0.3s;
@@ -345,9 +330,7 @@ footer {
 
       a {
         width: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flex-center;
         color: #fff;
 
         &:nth-child(1) {
@@ -361,9 +344,7 @@ footer {
     }
 
     &:hover {
-      -webkit-box-shadow: 1px 2px 3px 2px rgba(163, 163, 163, 0.14);
-      -moz-box-shadow: 1px 2px 3px 2px rgba(163, 163, 163, 0.14);
-      box-shadow: 1px 2px 3px 2px rgba(163, 163, 163, 0.14);
+      @include shadow-light(0.24);
       transition: 0.3s;
       .reveal {
         opacity: 1;
@@ -385,14 +366,10 @@ footer {
       position: sticky;
       top: 90px;
       border: 1px solid rgba(163, 163, 163, 0.14);
-      -webkit-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.14);
-      -moz-box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.14);
-      box-shadow: 1px 2px 3px 2px rgba(206, 206, 206, 0.14);
+      @include shadow-light(0.24);
 
       span.top {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flex-center;
         width: 40px;
         height: 40px;
         font-size: 1.4rem;
@@ -467,17 +444,7 @@ footer {
             background-color: #ffc400;
             color: #fff;
             border-radius: 10px;
-          }
-
-          &.selected {
-            -webkit-box-shadow: 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-            -moz-box-shadow: 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-            box-shadow: 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-          }
-          &:hover {
-            -webkit-box-shadow: inset 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-            -moz-box-shadow: inset 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
-            box-shadow: inset 1px 1px 10px 4px rgba(163, 163, 163, 0.34);
+            @include shadow-light(0.24);
           }
         }
       }
@@ -543,15 +510,6 @@ footer {
   margin: 30px 0;
   position: relative;
 
-  // h4 {
-  //   position: absolute;
-  //   top: -14px;
-  //   color: #fff;
-  //   background-color: #000;
-  //   padding: 5px 30px 2px 15px;
-  //   font-size: 1.2rem;
-  // }
-
   ul {
     list-style: none;
 
@@ -576,7 +534,6 @@ footer {
     }
 
     button {
-      // width: 100%;
       font-size: 1.2rem;
     }
 
@@ -720,10 +677,7 @@ footer {
 }
 
 .image-miniature {
-  // position: relative;
   display: inline-block;
-  // width: 150px;
-  // height: 100px;
   padding: 5px;
   border: 1px solid #dee2e6;
   margin: 10px;
@@ -752,8 +706,9 @@ footer {
 }
 
 @media (min-width: 992px) {
-  .top-nav .navbar-collapse.show {
+  .top-nav .navbar-collapse {
     border: none;
+    background-color: rgba(250, 250, 250, 0);
   }
 }
 

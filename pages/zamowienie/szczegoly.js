@@ -1,5 +1,10 @@
 import { connect } from "react-redux";
-import { updateClient, submitClient } from "../../redux/actions/clientActions";
+import {
+  updateClient,
+  submitClient,
+  cancelClient,
+  getClient,
+} from "../../redux/actions/clientActions";
 
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -30,23 +35,33 @@ import {
   faFileImage,
   faFileInvoice,
   faMoneyBillAlt,
+  faSyncAlt,
+  faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Szczegoly = ({ order, updateClient, products, pages }) => {
+const Szczegoly = ({
+  order,
+  updateClient,
+  cancelClient,
+  getClient,
+  products,
+  pages,
+}) => {
   const router = useRouter();
   const [key, setKey] = useState(router.query.tab);
 
   const getOrderdata = (id, email) => {
-    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/get/${id}/${email}`)
-      .then((res) => res.json())
-      .then((resJson) => {
-        if (resJson._id) {
-          console.log("zaktualizowano");
-          updateClient(resJson);
-        } else {
-          console.log("email i numer id niezgodne");
-        }
-      });
+    getClient(id, email);
+    // fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/get/${id}/${email}`)
+    //   .then((res) => res.json())
+    //   .then((resJson) => {
+    //     if (resJson._id) {
+    //       console.log("zaktualizowano");
+    //       updateClient(resJson);
+    //     } else {
+    //       console.log("email i numer id niezgodne");
+    //     }
+    //   });
   };
 
   const refresh = () => {
@@ -54,6 +69,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
   };
 
   const cancel = () => {
+    cancelClient(order);
     console.log("canceled");
   };
 
@@ -77,10 +93,18 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
           <Col md={12} lg={6}>
             <ContentBox title="Dostępne akcje">
               <Button onClick={refresh} variant="primary">
+                <FontAwesomeIcon icon={faSyncAlt} />
                 Odśwież
               </Button>
-              <Button onClick={cancel} variant="danger">
-                Anuluj zamówienie
+              <Button
+                onClick={cancel}
+                variant="danger"
+                disabled={order.status == "Anulowane" ? true : false}
+              >
+                <FontAwesomeIcon icon={faTrashAlt} />
+                {order.status == "Anulowane"
+                  ? "Zamówienie anulowane"
+                  : "Anuluj zamówienie"}
               </Button>
             </ContentBox>
           </Col>
@@ -105,6 +129,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
                 Pliki
               </span>
             }
+            disabled={order.status == "Anulowane" ? true : false}
           >
             <TabFiles order={order} updateClient={updateClient} />
           </Tab>
@@ -116,6 +141,7 @@ const Szczegoly = ({ order, updateClient, products, pages }) => {
                 Płatność
               </span>
             }
+            disabled={order.status == "Anulowane" ? true : false}
           >
             <TabPayment order={order} />
           </Tab>
@@ -132,6 +158,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   updateClient: (order) => updateClient(order),
   submitClient: (order) => submitClient(order),
+  cancelClient: (order) => cancelClient(order),
+  getClient: (order_id, email) => getClient(order_id, email),
 };
 
 export async function getStaticProps() {

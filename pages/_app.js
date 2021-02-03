@@ -1,5 +1,5 @@
 import "bootstrap/scss/bootstrap.scss";
-import "../styles/globals.scss";
+import "../styles/main.scss";
 
 import { Provider } from "next-auth/client";
 

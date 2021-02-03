@@ -30,9 +30,11 @@ function Home({ pages, products }) {
               <span>
                 Od <mark className="sea">pomysłu</mark>
               </span>
+              <br />
               <span>
                 przez <mark className="red">projekt</mark>
               </span>
+              <br />
               <span>
                 do <mark className="blue">realizacji</mark>
               </span>

@@ -60,7 +60,9 @@ const TabDetails = ({ order }) => {
           {order.history.map((el, i) => {
             return (
               <li key={i}>
-                <Badge variant="primary">{utils.dateNormalize(el.date)}</Badge>{" "}
+                <Badge variant="primary">
+                  {utils.dateNormalize(el.date, true)}
+                </Badge>{" "}
                 <span>{el.comment}</span>
               </li>
             );

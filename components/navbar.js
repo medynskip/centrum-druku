@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
-// import Link from "next/link";
 import LinkItem from "./link";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const NavbarHeader = () => {
-  // const [scroll, setScroll] = useState(true);
-
-  // useEffect(() => {
-  //   document.addEventListener("scroll", () => {
-  //     const scrollCheck = window.scrollY < 100;
-  //     if (scrollCheck !== scroll) {
-  //       setScroll(scrollCheck);
-  //     }
-  //   });
-  // });
-
   return (
     <Navbar
       collapseOnSelect
@@ -35,9 +27,6 @@ const NavbarHeader = () => {
           className="justify-content-end"
         >
           <Nav>
-            {/* <Link href="/">
-              <a className="nav-link">START</a>
-            </Link> */}
             <LinkItem href="/produkty">
               <a className="nav-link">PRODUKTY</a>
             </LinkItem>
@@ -49,6 +38,11 @@ const NavbarHeader = () => {
             </LinkItem>
             <LinkItem href="/kontakt">
               <a className="nav-link">KONTAKT</a>
+            </LinkItem>
+            <LinkItem href="/zamowienie/wyszukaj">
+              <a className="nav-link" alt="wyszukaj zamowienie">
+                <FontAwesomeIcon icon={faSearch} />
+              </a>
             </LinkItem>
           </Nav>
         </Navbar.Collapse>
