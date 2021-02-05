@@ -5,7 +5,7 @@ export const initOrder = (id) => {
     dispatch({
       type: t.LOADING,
     });
-    fetch(`http://api.piotrmedynski.pl/order/get/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/get/${id}`)
       .then((res) => res.json())
       .then((order) => {
         dispatch({
@@ -18,7 +18,7 @@ export const initOrder = (id) => {
 
 export const updateOrder = (order) => {
   return (dispatch) => {
-    fetch(`http://api.piotrmedynski.pl/order/update/${order._id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/update/${order._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

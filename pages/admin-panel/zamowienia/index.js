@@ -11,7 +11,7 @@ const OrdersList = ({ orders }) => {
   const router = useRouter();
 
   const deleteOrder = (orderID) => {
-    fetch(`http://api.piotrmedynski.pl/order/delete/${orderID}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/delete/${orderID}`, {
       method: "DELETE",
     }).then(() => {
       router.replace(router.asPath);
@@ -43,7 +43,7 @@ const OrdersList = ({ orders }) => {
 };
 
 export async function getServerSideProps() {
-  const res = await fetch(`http://api.piotrmedynski.pl/order/get`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/get`);
   const orders = await res.json();
 
   return { props: { orders } };

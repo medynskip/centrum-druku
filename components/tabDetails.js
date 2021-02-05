@@ -13,8 +13,10 @@ import Badge from "react-bootstrap/Badge";
 const TabDetails = ({ order }) => {
   const paymentTranslate = () => {
     switch (order.payment) {
-      case "NEW":
+      case "UNDEFINED":
         return "Niezdefiniowana";
+      case "NEW":
+        return "Rozpoczęta";
       case "PENDING":
         return "Oczekująca";
       case "CANCELED":

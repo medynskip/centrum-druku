@@ -86,7 +86,7 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
       submitClient({
         ...order,
         client: { ...fields },
-        payment: "NEW",
+        payment: "UNDEFINED",
         status: "Nowe",
         placed: Date.now(),
         history: [

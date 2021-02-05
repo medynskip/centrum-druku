@@ -120,6 +120,12 @@ mark.blue {
   }
 }
 
+.spinner-fullscreen {
+  width: 100vw;
+  height: 80vh;
+  @include flex-center-column;
+}
+
 .container > h3 {
   display: table;
   font-weight: bold;
