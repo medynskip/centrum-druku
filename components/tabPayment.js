@@ -53,7 +53,7 @@ const TabPayment = ({ order, updateClient }) => {
 
   const generateInvoice = () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_LINK}/order/update/invoice/${order._id}`,
+      `${process.env.NEXT_PUBLIC_API_LINK}/order/update/temp-invoice/${order._id}`,
       {
         method: "post",
         headers: {
