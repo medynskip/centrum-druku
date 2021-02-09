@@ -37,7 +37,9 @@ function Druk({ products, pages }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_LINK}/product/get`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
   const products = await res.json();
 
   const pagesQuery = await fetch(

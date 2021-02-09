@@ -53,7 +53,7 @@ const TabPayment = ({ order, updateClient }) => {
 
   const generateInvoice = () => {
     fetch(
-      `${process.env.NEXT_PUBLIC_API_LINK}/order/update/temp-invoice/${order._id}`,
+      `${process.env.NEXT_PUBLIC_API_LINK}/order/update/invoice/${order._id}`,
       {
         method: "post",
         headers: {
@@ -100,7 +100,10 @@ const TabPayment = ({ order, updateClient }) => {
           <Button disabled>Płatność rozpoczęta</Button>
         )}
         {order.invoice ? (
-          <Button onClick={downloadFile}>Pobierz Fakturę PRO-Forma</Button>
+          <>
+            <Button onClick={downloadFile}>Pobierz Fakturę PRO-Forma</Button>
+            <Button onClick={generateInvoice}>Odśwież</Button>
+          </>
         ) : (
           <Button onClick={generateInvoice}>Wygeneruj fakturę Pro-Forma</Button>
         )}
