@@ -18,7 +18,9 @@ const Prices = ({ prices, multiplier, priceToStore }) => {
     priceToStore({
       price: parseInt(e.currentTarget.getAttribute("data-price")),
       volume: parseInt(e.currentTarget.getAttribute("data-amount")),
-      value: parseInt(e.currentTarget.getAttribute("data-price")) * multiplier,
+      value: (
+        parseInt(e.currentTarget.getAttribute("data-price")) * multiplier
+      ).toFixed(0),
     });
   };
 
@@ -29,8 +31,8 @@ const Prices = ({ prices, multiplier, priceToStore }) => {
       <Table>
         <thead>
           <tr>
-            <th>Ilość</th>
-            <th>Cena</th>
+            <th>Nakład</th>
+            <th>Cena netto</th>
           </tr>
           {prices.map((price, i) => {
             return (

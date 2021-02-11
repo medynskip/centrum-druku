@@ -11,33 +11,19 @@ import Col from "react-bootstrap/Col";
 import Badge from "react-bootstrap/Badge";
 
 const TabDetails = ({ order }) => {
-  const paymentTranslate = () => {
-    switch (order.payment) {
-      case "UNDEFINED":
-        return "Niezdefiniowana";
-      case "NEW":
-        return "Rozpoczęta";
-      case "PENDING":
-        return "Oczekująca";
-      case "CANCELED":
-        return "Anulowana";
-      case "COMPLETED":
-        return "Opłacone";
-    }
-  };
-
   return (
     <>
       <Row>
         <Col md={12} lg={4}>
           <ContentBox title="Status zamówienia">
             <div className="main-order-details">
-              <strong>Zamówienie:</strong>
+              <strong>Status zamówienia:</strong>
               {order.status}
             </div>
             <div className="main-order-details">
-              <strong>Płatność:</strong>
-              {paymentTranslate(order.payment)}
+              <strong>Metoda płatności:</strong>
+              {/* {paymentTranslate(order.paymentType)} */}
+              {order.paymentType}
             </div>
           </ContentBox>
         </Col>

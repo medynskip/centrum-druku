@@ -22,9 +22,10 @@ const utils = {
     const time = withTime
       ? `g:${date.getHours()}:${("0" + date.getMinutes()).slice(-2)}`
       : "";
-    const displayDate = `${date.getDate()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()} ${time}`;
+    const displayDate = `${date.getDate()}/${(
+      "0" +
+      (date.getMonth() + 1)
+    ).slice(-2)}/${date.getFullYear()} ${time}`;
     return displayDate;
   },
 

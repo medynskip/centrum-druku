@@ -86,7 +86,8 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
       submitClient({
         ...order,
         client: { ...fields },
-        payment: "UNDEFINED",
+        paymentType: "Niezdefiniowana",
+        paymentStatus: "UNDEFINED",
         status: "Nowe",
         placed: Date.now(),
         history: [
@@ -149,28 +150,38 @@ const Zamowienie = ({ order, updateClient, submitClient, products, pages }) => {
                     required
                   />
                 </InputGroup>
-                <Form.Text className="text-muted">
+                {/* <Form.Text className="text-muted">
                   Zaznacz tylko jeśli zakup dokonywany jest na firmę i chcesz
                   otrzymać fakturę VAT. W przeciwnym razie do zamówienia
                   wystawiony zostanie paragon fiskalny.
-                </Form.Text>
-                <InputGroup className="mb-3">
-                  <InputGroup.Prepend>
-                    <InputGroup.Checkbox
-                      onChange={handleCheckbox}
-                      checked={company}
+                </Form.Text> */}
+                <Row>
+                  <InputGroup className="col-6">
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="basic-addon1">NIP</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                      onChange={handleChange}
+                      name="nip"
+                      value={fields.nip}
+                      placeholder="NIP nabywcy"
+                      disabled={company}
+                      required={company}
                     />
-                    <InputGroup.Text id="basic-addon1">NIP</InputGroup.Text>
-                  </InputGroup.Prepend>
-                  <FormControl
-                    onChange={handleChange}
-                    name="nip"
-                    value={fields.nip}
-                    placeholder="NIP nabywcy"
-                    disabled={!company}
-                    required={company}
-                  />
-                </InputGroup>
+                  </InputGroup>
+                  <InputGroup className="col-6">
+                    <InputGroup.Append>
+                      <InputGroup.Checkbox
+                        onChange={handleCheckbox}
+                        checked={company}
+                        label="Zaznacz jeśli kupujesz jako osoba prywatna"
+                      />
+                      <InputGroup.Text id="basic-addon1">
+                        Zaznacz jeśli kupujesz jako osoba prywatna
+                      </InputGroup.Text>
+                    </InputGroup.Append>
+                  </InputGroup>
+                </Row>
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend>
                     <InputGroup.Text id="basic-addon1">Ulica *</InputGroup.Text>

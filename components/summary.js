@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 const Summary = ({ order, sendToStore }) => {
   const history = useRouter();
 
+  useEffect(() => {}, [order.value]);
   const handleClick = () => {
     sendToStore({
       ...order,
@@ -19,10 +20,23 @@ const Summary = ({ order, sendToStore }) => {
     <div className="shop-module">
       <span className="top">3</span>
       <h4>Potwiedź parametry</h4>
-      <p>Produkt: {order.product}</p>
-      <p>Czas realizacji: {order.duration} dni robocze</p>
-      <p>Nakład: {order.volume} szt.</p>
-      <p>Wybrane parametry:</p>
+      <ul>
+        <li>
+          <strong>Produkt:</strong>
+          <span> {order.product}</span>
+        </li>
+        <li>
+          <strong>Czas realizacji:</strong>
+          <span>{order.duration} dni robocze</span>
+        </li>
+        <li>
+          <strong>Nakład:</strong>
+          <span>{order.volume} szt.</span>
+        </li>
+      </ul>
+      <div class="hr-sect">
+        <strong>Wybrane parametry:</strong>
+      </div>
       <ul>
         {order.parameters.map((el, i) => {
           return (
@@ -33,15 +47,27 @@ const Summary = ({ order, sendToStore }) => {
           );
         })}
       </ul>
+      <div class="hr-sect">
+        <strong>Dostawa:</strong>
+      </div>
+      <ul>
+        <li>
+          <span>Przesyłka kurierska</span>
+          <span>GRATIS</span>
+        </li>
+      </ul>
+
+      <div class="hr-sect">
+        <strong>Płatność:</strong>
+      </div>
       <p className="price">
-        Cena:
-        <br />
         <span className="netto">
-          {(order.price * order.multiplier).toFixed(0)},00 zł netto
+          {(order.price * order.multiplier).toFixed(0)}.00 zł netto
         </span>
         <br />
         <span className="brutto">
-          {(order.price * order.multiplier * 1.23).toFixed(2)} zł
+          {((order.price * order.multiplier).toFixed(0) * 1.23).toFixed(2)} zł
+          brutto
         </span>
       </p>
       <Button onClick={handleClick} variant="success">
