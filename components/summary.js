@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Button from "react-bootstrap/Button";
+import utils from "../utils/utils";
 
 const Summary = ({ order, sendToStore }) => {
   const history = useRouter();
@@ -54,6 +55,10 @@ const Summary = ({ order, sendToStore }) => {
         <li>
           <span>Przesyłka kurierska</span>
           <span>GRATIS</span>
+        </li>
+        <li>
+          <span>Opłać dzisiaj, wyślemy:</span>
+          <span>{utils.calculateWorkDays(Date.now(), order.duration)}</span>
         </li>
       </ul>
 
