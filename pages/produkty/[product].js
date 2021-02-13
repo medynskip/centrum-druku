@@ -83,7 +83,9 @@ function Product({ product, allProducts, pages }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch("http://api.piotrmedynski.pl/product/get/active");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_LINK}/product/get/active`
+  );
   const products = await res.json();
   const paths = products.map((product) => {
     // if (product.active) {
@@ -111,7 +113,7 @@ export async function getStaticProps({ params }) {
       product = { ...single };
     }
   });
-  return { props: { product, allProducts, pages } };
+  return { props: { product, allProducts, pages }, revalidate: 1 };
 }
 
 export default Product;

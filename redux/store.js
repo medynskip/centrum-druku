@@ -21,4 +21,4 @@ const middleware = [thunk];
 const makeStore = (context) =>
   createStore(reducer, applyMiddleware(...middleware));
 
-export const wrapper = createWrapper(makeStore, { debug: true });
+export const wrapper = createWrapper(makeStore, { debug: false });

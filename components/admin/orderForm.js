@@ -202,23 +202,6 @@ const OrderForm = ({ order, sendToStore }) => {
         handleSubmit={handleSubmit}
         modified={status.modified}
       />
-
-      {/* <Navbar fixed="bottom" bg="dark" expand="lg">
-        <Container>
-          <Link href="/admin-panel/zamowienia">
-            <a>
-              <Button variant="warning">Wyjdz</Button>
-            </a>
-          </Link>
-          <Button
-            variant={status.modified ? "success" : "primary"}
-            onClick={handleSubmit}
-            disabled={status.modified ? false : true}
-          >
-            {status.modified ? "Zapisz" : "Aktualne"}
-          </Button>
-        </Container>
-      </Navbar> */}
     </>
   );
 };

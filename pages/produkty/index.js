@@ -52,6 +52,7 @@ export async function getStaticProps() {
       products,
       pages,
     },
+    revalidate: 1,
   };
 }
 

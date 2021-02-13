@@ -1,6 +1,8 @@
 import "bootstrap/scss/bootstrap.scss";
 import "../styles/main.scss";
 
+import { useRouter } from "next/router";
+
 import { Provider } from "next-auth/client";
 
 // import { Provider } from "react-redux";
@@ -8,11 +10,14 @@ import { Provider } from "next-auth/client";
 import { wrapper } from "../redux/store";
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <Provider session={pageProps.session}>
-      <Component {...pageProps} />
-    </Provider>
-  );
+  const { asPath } = useRouter();
+  if (asPath.includes("admin-panel"))
+    return (
+      <Provider session={pageProps.session}>
+        <Component {...pageProps} />
+      </Provider>
+    );
+  return <Component {...pageProps} />;
 }
 
 export default wrapper.withRedux(MyApp);

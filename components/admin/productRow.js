@@ -43,7 +43,6 @@ const ProductRow = ({ product, deleteProduct }) => {
           <Button variant="danger" size="sm" onClick={deletePasser}>
             Delete
           </Button>
-          {/* <DeleteBtn id={product._id} deleteOne={deleteOne} /> */}
         </div>
       </div>
     </ListGroup.Item>

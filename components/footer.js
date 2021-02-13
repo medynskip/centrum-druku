@@ -37,21 +37,6 @@ const PageMap = ({ pages }) => {
             </li>
           );
         })}
-        {/* <li>
-          <Link href="/">START</Link>
-        </li>
-        <li>
-          <Link href="/">USUGI</Link>
-        </li>
-        <li>
-          <Link href="/">DRUK</Link>
-        </li>
-        <li>
-          <Link href="/">BLOG</Link>
-        </li>
-        <li>
-          <Link href="/">KONTAKT</Link>
-        </li> */}
       </ul>
     </>
   );
@@ -70,24 +55,6 @@ const ProductsList = ({ products }) => {
             </li>
           );
         })}
-        {/* <li>
-          <Link href="/">WIZYTÓWKI</Link>
-        </li>
-        <li>
-          <Link href="/">ULOTKI</Link>
-        </li>
-        <li>
-          <Link href="/">KATALOGI</Link>
-        </li>
-        <li>
-          <Link href="/">PLAKATY</Link>
-        </li>
-        <li>
-          <Link href="/">BANERY</Link>
-        </li>
-        <li>
-          <Link href="/">ROLL-UP</Link>
-        </li> */}
       </ul>
     </>
   );

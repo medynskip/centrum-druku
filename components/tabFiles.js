@@ -20,7 +20,6 @@ const TabFiles = ({ order, updateClient }) => {
     for (var x = 0; x < files.length; x++) {
       formData.append("file", files[x]);
     }
-    console.log("klik", files);
     fetch(`${process.env.NEXT_PUBLIC_API_LINK}/order/update/files`, {
       method: "post",
       body: formData,

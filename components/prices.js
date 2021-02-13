@@ -6,13 +6,6 @@ import Table from "react-bootstrap/Table";
 const Prices = ({ prices, multiplier, priceToStore }) => {
   const [active, setActive] = useState(0);
 
-  // useEffect(() => {
-  //   priceToStore({
-  //     volume: parseInt(e.currentTarget.getAttribute("data-amount")),
-  //     value: parseInt(e.currentTarget.getAttribute("data-price")) * multiplier,
-  //   });
-  // }, [multiplier]);
-
   const handleClick = (e) => {
     setActive(e.currentTarget.getAttribute("data-key"));
     priceToStore({
@@ -42,7 +35,6 @@ const Prices = ({ prices, multiplier, priceToStore }) => {
                 data-key={i}
                 data-amount={price.amount}
                 data-price={price.price}
-                // data-price={(price.price * props.mult).toFixed(0)}
                 onClick={handleClick}
               >
                 <td name={i}>{price.amount}</td>

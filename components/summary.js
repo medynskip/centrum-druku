@@ -35,7 +35,7 @@ const Summary = ({ order, sendToStore }) => {
           <span>{order.volume} szt.</span>
         </li>
       </ul>
-      <div class="hr-sect">
+      <div className="hr-sect">
         <strong>Wybrane parametry:</strong>
       </div>
       <ul>
@@ -48,7 +48,7 @@ const Summary = ({ order, sendToStore }) => {
           );
         })}
       </ul>
-      <div class="hr-sect">
+      <div className="hr-sect">
         <strong>Dostawa:</strong>
       </div>
       <ul>
@@ -62,7 +62,7 @@ const Summary = ({ order, sendToStore }) => {
         </li>
       </ul>
 
-      <div class="hr-sect">
+      <div className="hr-sect">
         <strong>Płatność:</strong>
       </div>
       <p className="price">
